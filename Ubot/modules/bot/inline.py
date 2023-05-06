@@ -83,14 +83,15 @@ async def alive_function(message, answers):
     ping = (datetime.now() - start).microseconds / 1000
     uptime = await get_readable_time((time.time() - StartTime))
     msg = (
-        f"<b>Naya-Premium</b>\n"
-        f"    <b> naya_status : {status} </b>\n"
-        f"    <b> naya_libs :</b> <code>{naylibs}</code>\n"
-        f"    <b> ping_dc :</b> <code>{ping} ms</code>\n"
-        f"    <b> users_count :</b> <code>{users} users</code>\n"
-        f"    <b> groups_count :</b> <code>{group} group</code>\n"
-        f"    <b> naya_expired :</b> <i>{remaining_days}</i>\n"
-        f"    <b> naya_uptime :</b> <code>{uptime}</code>\n")
+        f"<b>NayaPremium</b>\n"
+        f"      <b> naya_status : {status} </b>\n"
+        f"      <b> naya_expired :</b> <i>{remaining_days}</i>\n"
+        f"      <b> naya_uptime :</b> <code>{uptime}</code>\n"
+        f"      <b> kynaylibs :</b> <code>{naylibs}</code>\n"
+        f"      <b> ping_dc :</b> <code>{ping} ms</code>\n"
+        f"      <b> users_count :</b> <code>{users} users</code>\n"
+        f"      <b> groups_count :</b> <code>{group} group</code>\n"
+        )
     answers.append(
         InlineQueryResultArticle(
             title="alive",
