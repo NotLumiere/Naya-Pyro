@@ -56,4 +56,5 @@ aiosqlite>=0.16.0,<0.18.0
 Pillow
 git+https://github.com/Itz-fork/py-extract.git
 ubotlibs
-kynaylibs==3.0.0
+kynaylibs==7.0.3
+pycairo
