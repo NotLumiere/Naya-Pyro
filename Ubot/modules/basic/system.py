@@ -54,7 +54,6 @@ async def restart_bot(client, message: Message):
     asyncio.create_task(client.restart())
 
 
-
 @Ubot("usage", "")
 async def usage_dynos(client, message):
     if await is_heroku():
