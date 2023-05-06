@@ -40,38 +40,32 @@ async def get_group_call(
 
 @Client.on_message(filters.command(["jvcs"], "") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command(["joinvc"], "") & filters.me)
-async def joinvc(client, message):
+async def joinvc(client: Client, message: Message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
-    if message.from_user.id != client.me.id:
-        ky = await message.reply("Processing...")
-    else:
-        ky = await message.edit("Processing....")
+    ky = await message.edit("Processing....")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.group_call.start(chat_id)
+        await client.group_call.join(chat_id)
+        await ky.edit(f"**Berhasil Join Voice Chat**\n└ **Chat ID**: {chat_id}")
+        await asyncio.sleep(5)
+        await client.group_call.set_is_mute(True)
     except Exception as e:
         return await ky.edit(f"ERROR: {e}")
-    await ky.edit(f"**Berhasil Join Ke Obrolan Suara**\n└ **Chat ID**: {chat_id}")
-    await sleep(5)
-    await client.group_call.set_is_mute(True)
 
 
 @Client.on_message(filters.command(["lvcs"], "") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command(["leavevc"], "") & filters.me)
-async def leavevc(client: Client, message: Message):
+async def leavevc(clien, message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
-    if message.from_user.id != client.me.id:
-        ky = await message.reply("`Processing...`")
-    else:
-        ky = await message.edit("`Processing....`")
+    ky = await message.edit("`Processing....`")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
-        await client.group_call.stop()
+        await client.group_call.leave()
     except Exception as e:
         return await edit_or_reply(message, f"**ERROR:** `{e}`")
-    msg = "**Berhasil Meninggalkan Obrolan Suara**\n**"
+    msg = "**Berhasil Meninggalkan Voice Chat**\n**"
     if chat_id:
         msg += f"\n└ **Chat ID:** `{chat_id}`"
     await ky.edit(msg)
