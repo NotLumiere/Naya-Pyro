@@ -10,7 +10,7 @@ from Ubot import aiosession, bots, app, ids, loop
 from platform import python_version as py
 from .logging import LOGGER
 from pyrogram import __version__ as pyro
-from kynaylibs.version import __version__ as nay
+from kynaylibs import __version__ as nay
 from Ubot.modules import ALL_MODULES
 from Ubot.core.db import *
 from Ubot.core import *
