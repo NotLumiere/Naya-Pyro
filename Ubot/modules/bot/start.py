@@ -1,13 +1,8 @@
-import asyncio
-import math
 import os
 import sys
 from io import BytesIO
 from itertools import count
-from os import environ, execle
 
-import heroku3
-import requests
 import urllib3
 from dotenv import load_dotenv
 from pyrogram import *
