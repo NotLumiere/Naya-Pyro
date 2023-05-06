@@ -82,7 +82,7 @@ bot1 = (
         api_hash=API_HASH,
         session_string=SESSION1,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION1
@@ -96,7 +96,7 @@ bot2 = (
         api_hash=API_HASH,
         session_string=SESSION2,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION2
@@ -110,7 +110,7 @@ bot3 = (
         api_hash=API_HASH,
         session_string=SESSION3,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION3
@@ -124,7 +124,7 @@ bot4 = (
         api_hash=API_HASH,
         session_string=SESSION4,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION4
@@ -138,7 +138,7 @@ bot5 = (
         api_hash=API_HASH,
         session_string=SESSION5,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION5
@@ -151,7 +151,7 @@ bot6 = (
         api_hash=API_HASH,
         session_string=SESSION6,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION6
@@ -165,7 +165,7 @@ bot7 = (
         api_hash=API_HASH,
         session_string=SESSION7,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION7
@@ -179,7 +179,7 @@ bot8 = (
         api_hash=API_HASH,
         session_string=SESSION8,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION8
@@ -193,7 +193,7 @@ bot9 = (
         api_hash=API_HASH,
         session_string=SESSION9,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION9
@@ -207,7 +207,7 @@ bot10 = (
         api_hash=API_HASH,
         session_string=SESSION10,
         workers=USER_WORKERS,
-        plugins=dict(root="Ubot/modules"),
+        plugins=dict(root="Ubot/modules/basic"),
         in_memory=True,
     )
     if SESSION10
