@@ -10,6 +10,7 @@ from Ubot import aiosession, bots, app, ids, loop
 from platform import python_version as py
 from .logging import LOGGER
 from pyrogram import __version__ as pyro
+from kynaylibs import __version__ as nay
 from Ubot.modules import ALL_MODULES
 from Ubot.core.db import *
 from Ubot.core import *
@@ -27,6 +28,7 @@ MSG_ON = """
 ◉ **Versi** : `{}`
 ◉ **Phython** : `{}`
 ◉ **Pyrogram** : `{}`
+◉ **Kynaylibs** : `{}`
 **Ketik** `alive` **untuk Mengecheck Bot**
 ╼┅━━━━━━━━━━╍━━━━━━━━━━┅╾
 """
@@ -46,7 +48,7 @@ async def start_bot():
             await buat_log(bot)
             botlog_chat_id = await get_botlog(user_id)
             try:
-                await bot.send_message(botlog_chat_id, MSG_ON.format(BOT_VER, py(), pyro))
+                await bot.send_message(botlog_chat_id, MSG_ON.format(BOT_VER, py(), pyro, nay))
             except BaseException as a:
                 LOGGER("Info").warning(f"{a}")
             LOGGER("Info").info("Startup Completed")
