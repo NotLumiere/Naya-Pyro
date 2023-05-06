@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Client, filters
 
 from pyrogram import Client, filters, enums
-from Ubot.core.lgs import *
+from Ubot.core import *
 from . import *
 
 @Ubot(["logo2"], "")
