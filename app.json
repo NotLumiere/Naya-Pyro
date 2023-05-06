@@ -4,7 +4,7 @@
     "logo": "https://telegra.ph//file/75acabea0a9cc6679c2d4.jpg",
     "keywords": ["telegram", "userbot", "pyrogram"],
     "repository": "https://github.com/naya1503/Naya-Pyro",
-    "stack": "container",
+    "stack": "heroku-22",
     "env": {
         "SESSION1": {
             "description": "Isi String Pyrogram V2 Ambil Di @NayaStringBot",
