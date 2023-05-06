@@ -13,6 +13,7 @@ from gc import get_objects
 from pyrogram import __version__ as pyrover
 from pyrogram.enums import ParseMode
 from pyrogram import *
+from kynaylibs import __version__ as naylibs
 from pyrogram.types import *
 from Ubot.core import *
 from pyrogram.raw.functions import Ping
@@ -30,9 +31,6 @@ def support():
     buttons = [
         [
             InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/kynansupport"),
-        ],
-        [
-            InlineKeyboardButton(text="ᴄʟᴏsᴇ", callback_data="close"),
         ],
     ]
     return buttons
@@ -71,11 +69,11 @@ async def alive_function(message, answers):
         elif dialog.chat.type in (enums.ChatType.GROUP, enums.ChatType.SUPERGROUP):
             group += 1
     if message._client.me.id in BLACK:
-        status = "OWNER"
+        status = "DEVS"
     elif message._client.me.id is OWNER_ID:
-        status = "ADMINS"
+        status = "OWNER"
     else:
-        status = "ADMINS"
+        status = "OWNER"
     start = datetime.now()
     buttons = support()
     ex = await message._client.get_me()
@@ -86,13 +84,13 @@ async def alive_function(message, answers):
     uptime = await get_readable_time((time.time() - StartTime))
     msg = (
         f"<b>Naya-Premium</b>\n"
-        f"    <b> status : {status} </b>\n"
-        f"    <b> users :</b> <code>{user}</code>\n"
+        f"    <b> naya_status : {status} </b>\n"
+        f"    <b> naya_libs :</b> <code>{naylibs}</code>\n"
         f"    <b> ping_dc :</b> <code>{ping} ms</code>\n"
         f"    <b> users_count :</b> <code>{users} users</code>\n"
         f"    <b> groups_count :</b> <code>{group} group</code>\n"
-        f"    <b> expired :</b> <i>{remaining_days}</i>\n"
-        f"    <b> uptime :</b> <code>{uptime}</code>\n")
+        f"    <b> naya_expired :</b> <i>{remaining_days}</i>\n"
+        f"    <b> naya_uptime :</b> <code>{uptime}</code>\n")
     answers.append(
         InlineQueryResultArticle(
             title="alive",
