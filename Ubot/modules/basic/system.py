@@ -1,26 +1,22 @@
 import asyncio
 import math
-import os
 import sys
-from io import BytesIO
-from itertools import count
-from os import environ, execle, remove
+from os import remove
+
+import heroku3
+from pyrogram import *
+from pyrogram.types import *
 
 from config import *
 from Ubot.core.db import *
+from Ubot.logging import LOGGER
 
 from . import *
 
 HAPP = None
-import heroku3
-from pyrogram import *
 
-from pyrogram.types import *
-from Ubot.logging import LOGGER
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
 
 
 XCB = [
@@ -39,6 +35,7 @@ XCB = [
     "main",
 ]
 
+
 @Client.on_message(filters.command("restart", "") & filters.me)
 async def restart_bot(client, message):
     try:
@@ -50,8 +47,7 @@ async def restart_bot(client, message):
 
     await message.edit("✅ Bot has restarted.")
     client.restart()
-    
-    
+
 
 @Ubot("usage", "")
 async def usage_dynos(client, message):
@@ -117,6 +113,7 @@ async def usage_dynos(client, message):
 Dyno tersisa:
   ╰ Tersisa: `{hours}`**h**  `{minutes}`**m**  [`{percentage}`**%**]"""
     return await dyno.edit(text)
+
 
 @Ubot("shutdown", "")
 async def shutdown_bot(client, message):
