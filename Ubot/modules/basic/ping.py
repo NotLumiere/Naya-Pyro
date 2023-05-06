@@ -18,8 +18,6 @@ from datetime import datetime
 from . import *
 from ubotlibs.ubot.helper.PyroHelpers import *
 from Ubot import *
-from Ubot.core.db import set_custom_var
-from Ubot.core.cos_cmd import nay
 from .systemstats import get_readable_time
 from ubotlibs.ubot.utils.tools import get_arg
 
@@ -130,42 +128,3 @@ async def pingme(client, message):
         f"**Pong!**\n`%sms`\n" % (duration)
         )
     await ping_.delete()
-
-@nay(["hello"], CMD_HNDLR)
-async def hello(client, message):
-    await message.reply("hsloo  sempak world")
-
-@Client.on_message(filters.command("sv", ".") & filters.me)
-async def setvar(client, message):
-    user_id = client.me.id
-    crot = await message.reply("`Processing...`")
-    cok = get_arg(message)
-    if not cok:
-      return await crot.edit("`Give Variable and Value to set!`")
-    else:
-        biji = cok.split(" ", 1)
-        await set_custom_var(user_id, var=biji[0], value=biji[1])
-        await crot.edit(f"**Successfully Added Custom Var** \n\n**Var:** `{biji[0]}` \n**Val:** `{biji[1]}`")
-
-"""
-@nay(["pak"], CMD_HNDLR)
-async def y(client, message):
-    await message.reply("sesama gay itu monyet")
-
-
-@Ubot("pek", "")
-async def jing(client, message):
-    ajg = await eor(message, "Modal copas Jing")
-    await asyncio.sleep(2)
-    await ajg.edit("Lah iya lu juga modal copas nyet")
-    await asyncio.sleep(2)
-    await ajg.edit("kok sok pro si bangsat")
-    await asyncio.sleep(2)
-    await ajg.edit("lah iya nyet sesama copas gausah hina bangsat")
-    await asyncio.sleep(2)
-    await ajg.edit("bahaha kok ngakak ajg")
-    await asyncio.sleep(2)
-    await ajg.edit("bangsat kok teriak bangsat")
-    await asyncio.sleep(2)
-    await ajg.edit("gay teriak gay **GOBLOK**")
-"""
