@@ -10,7 +10,7 @@ from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton as Ikb
 from . import *
 from Ubot.core.db  import *
-from Ubot.core.filter import *
+from Ubot.core import *
 
 @Ubot("adfil", "")
 async def save_filters(client, message):
