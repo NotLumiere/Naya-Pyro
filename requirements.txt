@@ -57,4 +57,3 @@ Pillow
 git+https://github.com/Itz-fork/py-extract.git
 ubotlibs
 kynaylibs==7.0.3
-pycairo
