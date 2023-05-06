@@ -101,18 +101,6 @@ async def restart_bot(_, message: Message):
         execle(sys.executable, *args, environ)
 
 
-@Client.on_message(filters.command("restart", "") & filters.me)
-async def restart_bot(client, message: Message):
-    try:
-        await message.edit("Restarting bot...")
-        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
-    except BaseException as err:
-        LOGGER(__name__).info(f"{err}")
-        return
-
-    await message.edit("✅ Bot has restarted.")
-    client.restart()
-
 
 @Ubot("usage", "")
 async def usage_dynos(client, message):
