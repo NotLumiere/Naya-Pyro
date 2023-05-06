@@ -42,7 +42,7 @@ XCB = [
 
 
 @Client.on_message(filters.command("restart", "") & filters.me)
-async def restart_bot(client, message):
+async def restart_bot(client, message: Message):
     try:
         ajg = await message.reply("Restarting bot...")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
@@ -50,8 +50,9 @@ async def restart_bot(client, message):
         LOGGER(__name__).info(f"{err}")
         return
     await asyncio.sleep(1)
-    await ajg.edit("✅ Bot has restarted.")
-    await client.restart()
+    await message.edit("✅ Bot has restarted.\n\n")
+    asyncio.create_task(client.restart())
+
 
 
 @Ubot("usage", "")
