@@ -114,7 +114,6 @@ async def restart_bot(client, message: Message):
     client.restart()
 
 
-
 @Ubot("usage", "")
 async def usage_dynos(client, message):
     if await is_heroku():
