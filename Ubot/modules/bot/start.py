@@ -1,8 +1,13 @@
+import asyncio
+import math
 import os
 import sys
 from io import BytesIO
 from itertools import count
+from os import environ, execle
 
+import heroku3
+import requests
 import urllib3
 from dotenv import load_dotenv
 from pyrogram import *
@@ -83,13 +88,13 @@ async def start_(client: Client, message: Message):
 @app.on_message(filters.private & filters.command("restart") & ~filters.via_bot)
 async def restart_bot(client, message):
     try:
-        await message.edit("Restarting bot...")
+        await message.reply("Restarting bot...")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
     except BaseException as err:
         LOGGER(__name__).info(f"{err}")
         return
 
-    await message.edit("✅ Bot has restarted.")
+    await message.reply("✅ Bot has restarted.")
     client.restart()
 
 
