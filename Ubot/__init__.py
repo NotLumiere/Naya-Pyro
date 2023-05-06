@@ -1,19 +1,23 @@
 import asyncio
 import logging
+import os
 import sys
 import time
-import os
+from ast import parse
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
+
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from gpytranslate import Translator
-from pyrogram import Client, filters, __version__, enums
+from pyrogram import Client, __version__, enums, filters
 from pytgcalls import GroupCallFactory
-from ast import parse
-from .logging import LOGGER
+
 from config import *
+
+from .logging import LOGGER
+
 cmds = "."
 CMD_HELP = {}
 clients = []
@@ -21,10 +25,9 @@ ids = []
 
 
 if BOTLOG_CHATID:
-   BOTLOG_CHATID = BOTLOG_CHATID
+    BOTLOG_CHATID = BOTLOG_CHATID
 else:
-   BOTLOG_CHATID = "me"
-
+    BOTLOG_CHATID = "me"
 
 
 trl = Translator()
@@ -69,8 +72,8 @@ class Bot(Client):
 app = Bot()
 
 if not BOT_TOKEN:
-   LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
-   sys.exit()
+    LOGGER(__name__).error("WARNING: BOT TOKEN TIDAK DITEMUKAN, SHUTDOWN BOT")
+    sys.exit()
 
 bot1 = (
     Client(
@@ -210,9 +213,11 @@ bot10 = (
     if SESSION10
     else None
 )
-   
-  
-bots = [bot for bot in [bot1, bot2, bot3, bot4, bot5, bot6, bot7, bot8, bot9, bot10] if bot]
+
+
+bots = [
+    bot for bot in [bot1, bot2, bot3, bot4, bot5, bot6, bot7, bot8, bot9, bot10] if bot
+]
 
 for bot in bots:
     if not hasattr(bot, "group_call"):

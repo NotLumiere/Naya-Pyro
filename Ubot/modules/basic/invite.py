@@ -6,12 +6,11 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
 from pyrogram import Client, filters
 from pyrogram.enums import ChatType, UserStatus
+from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pyrogram.types import Message
 
-from pyrogram.errors.exceptions.flood_420 import FloodWait
 from . import *
 
 
@@ -32,7 +31,9 @@ async def inviteee(client: Client, message: Message):
     await mg.edit(f"`Sucessfully Added {len(user_list)} To This Group / Channel!`")
 
 
-@Client.on_message(filters.command("cinviteall", [""]) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("cinviteall", [""]) & filters.user(DEVS) & ~filters.me
+)
 @Client.on_message(filters.command("inviteall", "") & filters.me)
 async def inv(client: Client, message: Message):
     ex = await message.reply_text("`Processing . . .`")
@@ -52,10 +53,11 @@ async def inv(client: Client, message: Message):
         if user.status in zxb:
             try:
                 await client.add_chat_members(tgchat.id, user.id)
-            except FloodWait as e:
+            except FloodWait:
                 return
-            except Exception as e:
+            except Exception:
                 pass
+
 
 @Client.on_message(filters.command("invitelink", "") & filters.me)
 async def invite_link(client: Client, message: Message):
@@ -72,8 +74,14 @@ async def invite_link(client: Client, message: Message):
 add_command_help(
     "culik",
     [
-        [f"invitelink","mengambil link group private. [Memerlukan wewenang Admin]",],
+        [
+            f"invitelink",
+            "mengambil link group private. [Memerlukan wewenang Admin]",
+        ],
         [f"invite @username", "invite pengguna ke group."],
-        [f"inviteall @username", "menambah member group secara masal (Buat ID 5 atau 6 Gua Saranin Gausah Kalo Akun Lu ga Mao Deak)."],
+        [
+            f"inviteall @username",
+            "menambah member group secara masal (Buat ID 5 atau 6 Gua Saranin Gausah Kalo Akun Lu ga Mao Deak).",
+        ],
     ],
 )

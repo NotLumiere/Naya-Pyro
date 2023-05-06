@@ -5,16 +5,18 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.errors.exceptions.bad_request_400 import (
     ChatAdminRequired,
     ChatNotModified,
 )
 from pyrogram.types import ChatPermissions, Message
+
 from . import *
 
-
-incorrect_parameters = f"Parameter salah, gunakan `help locks` untuk melihat contoh penggunaan"
+incorrect_parameters = (
+    f"Parameter salah, gunakan `help locks` untuk melihat contoh penggunaan"
+)
 data = {
     "msg": "can_send_messages",
     "stickers": "can_send_other_messages",
@@ -28,7 +30,6 @@ data = {
     "invite": "can_invite_users",
     "pin": "can_pin_messages",
 }
-
 
 
 async def current_chat_permissions(client: Client, chat_id):
@@ -75,9 +76,7 @@ async def tg_lock(
             message.chat.id, ChatPermissions(**permissions)
         )
     except ChatNotModified:
-        return await message.edit_text(
-            f"Gunakan lock, terlebih dahulu."
-        )
+        return await message.edit_text(f"Gunakan lock, terlebih dahulu.")
     except ChatAdminRequired:
         return await message.edit_text("`Anda harus menjadi admin disini.`")
     await message.edit_text(
@@ -160,7 +159,8 @@ add_command_help(
     "lock",
     [
         [f"lock [all atau spesific content]", "membatasi kiriman group."],
-        [f"unlock [all atau spesific content]",
+        [
+            f"unlock [all atau spesific content]",
             "membuka lock\n\nspesific content : Locks / Unlocks:` `msg` | `media` | `stickers` | `polls` | `info`  | `invite` | `webprev` |`pin` | `all`.",
         ],
     ],

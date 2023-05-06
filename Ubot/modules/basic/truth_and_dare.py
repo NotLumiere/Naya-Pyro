@@ -18,7 +18,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
 import random
 
 import Ubot.modules.basic.truth_and_dare_string as tod
@@ -33,9 +32,8 @@ async def apakah(client, message):
     split_text = message.text.split(None, 1)
     if len(split_text) < 2:
         return await message.reply("Berikan saya pertanyaan 😐")
-    cot = split_text[1]
+    split_text[1]
     await message.reply(f"{random.choice(tod.AP)}")
-
 
 
 @Ubot(["kenapa"], "")
@@ -43,7 +41,7 @@ async def kenapa(client, message):
     split_text = message.text.split(None, 1)
     if len(split_text) < 2:
         return await message.reply("Berikan saya pertanyaan 😐")
-    cot = split_text[1]
+    split_text[1]
     await message.reply(f"{random.choice(tod.KN)}")
 
 
@@ -52,13 +50,13 @@ async def bagaimana(client, message):
     split_text = message.text.split(None, 1)
     if len(split_text) < 2:
         return await message.reply("Berikan saya pertanyaan 😐")
-    cot = split_text[1]
+    split_text[1]
     await message.reply(f"{random.choice(tod.BG)}")
 
 
 @Ubot(["dare"], "")
 async def dare(client, message):
-    try:        
+    try:
         await message.edit(f"{random.choice(tod.DARE)}")
     except BaseException:
         pass
@@ -91,4 +89,3 @@ add_command_help(
         [f"bagaimana [pertanyaan]", "Coba sendiri"],
     ],
 )
-        

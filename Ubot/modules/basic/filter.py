@@ -6,11 +6,14 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 import re
-from pyrogram import filters, Client
-from pyrogram.types import InlineKeyboardButton as Ikb
-from . import *
-from Ubot.core.db  import *
+
+from pyrogram import Client, filters
+
 from Ubot.core import *
+from Ubot.core.db import *
+
+from . import *
+
 
 @Ubot("adfil", "")
 async def save_filters(client, message):
@@ -18,18 +21,11 @@ async def save_filters(client, message):
         return await message.reply_text(
             f"**Gunakan Format:**\nbalas kepesan atau sticker `savefilter` [nama filter] untuk save filter."
         )
-    if (
-        not message.reply_to_message.text
-        and not message.reply_to_message.sticker
-    ):
-        return await message.reply_text(
-            "**Hanya bisa save text atau sticker.**"
-        )
+    if not message.reply_to_message.text and not message.reply_to_message.sticker:
+        return await message.reply_text("**Hanya bisa save text atau sticker.**")
     name = message.text.split(None, 1)[1].strip()
     if not name:
-        return await message.reply_text(
-            f"**Gunakan Format:**\n`filter` [nama filter]"
-        )
+        return await message.reply_text(f"**Gunakan Format:**\n`filter` [nama filter]")
     chat_id = message.chat.id
     user_id = client.me.id
     if message.chat.id in BL_GCAST:
@@ -45,6 +41,7 @@ async def save_filters(client, message):
     await save_filter(user_id, chat_id, name, _filter)
     await message.reply_text(f"**Filter {name} disimpan!.**")
 
+
 @Ubot("filters", "")
 async def get_filterss(client, message):
     user_id = client.me.id
@@ -58,23 +55,32 @@ async def get_filterss(client, message):
         msg += f"**-** `{_filter}`\n"
     await message.reply_text(msg)
 
+
 @Ubot("stfil", "")
 async def del_filter(client, message):
     if len(message.command) < 2:
-        return await message.reply_text(f"**Gunakan Format:**\n`stopfilter` [nama filter]")
+        return await message.reply_text(
+            f"**Gunakan Format:**\n`stopfilter` [nama filter]"
+        )
     user_id = client.me.id
     chat_id = message.chat.id
     name = message.text.split(None, 1)[1].strip()
     if not name:
-        return await message.reply_text(f"**Gunakan format:**\n`stopfilter` [nama filter]")
-    
+        return await message.reply_text(
+            f"**Gunakan format:**\n`stopfilter` [nama filter]"
+        )
+
     deleted = await delete_filter(user_id, chat_id, name)
     if deleted:
         await message.reply_text(f"*Filter {name} berhasil dihapus.**")
     else:
         await message.reply_text("**Filter tidak ditemukan.**")
 
-@Client.on_message(filters.text & ~filters.private & ~filters.via_bot & ~filters.forwarded,group=chat_filters_group)
+
+@Client.on_message(
+    filters.text & ~filters.private & ~filters.via_bot & ~filters.forwarded,
+    group=chat_filters_group,
+)
 async def filters_re(client, message):
     text = message.text.lower().strip()
     if not text:
@@ -118,7 +124,8 @@ async def filters_re(client, message):
                     await message.delete()
                 return
             return await message.reply_sticker(data)
-        
+
+
 add_command_help(
     "filter",
     [

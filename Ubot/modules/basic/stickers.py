@@ -10,25 +10,22 @@ import os
 import random
 from io import BytesIO
 
-import shlex
-import textwrap
 import cv2
 import requests
-from PIL import Image, ImageDraw, ImageFont
 from bs4 import BeautifulSoup as bs
-from pyrogram import Client, emoji, filters
+from PIL import Image
+from pyrogram import Client, emoji
 from pyrogram.enums import ParseMode
 from pyrogram.errors import StickersetInvalid, YouBlockedUser
 from pyrogram.raw.functions.messages import GetStickerSet
 from pyrogram.raw.types import InputStickerSetShortName
-from pyrogram.types import Message, InputMedia, InputMediaPhoto
-
-from . import *
+from pyrogram.types import Message
 from ubotlibs.ubot.helper.PyroHelpers import ReplyCheck
 from ubotlibs.ubot.utils import *
 
+from . import *
 
-sat= [
+sat = [
     "Ijin nyolong banh..",
     "Buset maling ah...",
     "Sststststs Dor...",
@@ -47,9 +44,9 @@ def create_pack(client, message):
     if not message.reply_to_message or not message.reply_to_message.sticker:
         message.edit_text("Balas pesan stiker untuk ditambahkan ke pack sticker.")
         return
-    
+
     sticker_file_id = message.reply_to_message.sticker.file_id
-    
+
     try:
         pack = client.create_new_sticker_set(
             user_id=message.from_user.id,
@@ -64,10 +61,9 @@ def create_pack(client, message):
             return
         else:
             raise e
-        
+
     message.edit_text(f"Sticker pack {pack_name} telah berhasil dibuat.")
 """
-
 
 
 @Ubot(["kang"], "")
@@ -480,12 +476,15 @@ async def stick2png(client: Client, message: Message):
 add_command_help(
     "sticker",
     [
-        [f"kang `Balas` Gambar",
-            f"Balas kang menambahkan gambar/stiker ke pack stiker anda."],
-        [f"kang [emoji] `atau` double [emoji]",
-            "Menambahkan stiker dengan spesifik emoji.`"],
-        [f"packinfo `or` stickerinfo",
-            "Mengambil info stiker atau pack striker."],
+        [
+            f"kang `Balas` Gambar",
+            f"Balas kang menambahkan gambar/stiker ke pack stiker anda.",
+        ],
+        [
+            f"kang [emoji] `atau` double [emoji]",
+            "Menambahkan stiker dengan spesifik emoji.`",
+        ],
+        [f"packinfo `or` stickerinfo", "Mengambil info stiker atau pack striker."],
         [f"stickers <nama sticker>", "Untuk mencari pack stikernya."],
     ],
 )
@@ -494,16 +493,16 @@ add_command_help(
 add_command_help(
     "meme",
     [
-        [f"mmf Top Text ; Bottom Text",
-            "Balas ke stiker untuk membuat memify text stiker."],
-        [f"tiny [reply ke photo/sticker]",
-            "To Change the Sticker to be Small."],
-        [f"text <warna>/<r/g/b/w> <pesan> atau <balas ke pesan>",
-            "Merubah text jadi sticker."],
-        [f"twitt <balas ke pesan>",
-            "Mebuat stiker status twitter."],
-        [f"mms atau meme <teks>",
-            "Mebuat stiker random dengan text."],
+        [
+            f"mmf Top Text ; Bottom Text",
+            "Balas ke stiker untuk membuat memify text stiker.",
+        ],
+        [f"tiny [reply ke photo/sticker]", "To Change the Sticker to be Small."],
+        [
+            f"text <warna>/<r/g/b/w> <pesan> atau <balas ke pesan>",
+            "Merubah text jadi sticker.",
+        ],
+        [f"twitt <balas ke pesan>", "Mebuat stiker status twitter."],
+        [f"mms atau meme <teks>", "Mebuat stiker random dengan text."],
     ],
 )
-

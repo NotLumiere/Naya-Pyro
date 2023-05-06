@@ -6,9 +6,10 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-from . import *
-from ubotlibs.ubot.database.accesdb import *
 from pyrogram.enums import MessagesFilter
+from ubotlibs.ubot.database.accesdb import *
+
+from . import *
 
 
 @Ubot(["take"], "")
@@ -47,9 +48,13 @@ async def _(client, message):
         f"✅ {done}/{message.command[3]} {message.command[2]} telah berhasil diambil"
     )
 
+
 add_command_help(
     "spesial",
     [
-        [f"take [foto/video][jumlah][username grup(contoh : kynansupport)]", "Mengambil Pesan Dari Grup/Channel."],
+        [
+            f"take [foto/video][jumlah][username grup(contoh : kynansupport)]",
+            "Mengambil Pesan Dari Grup/Channel.",
+        ],
     ],
 )

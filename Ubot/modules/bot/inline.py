@@ -1,28 +1,29 @@
-
-import random
 import time
 import traceback
-from sys import version as pyver
 from datetime import datetime
-import os
-import shlex
-import textwrap
-import asyncio 
 from gc import get_objects
 
-from pyrogram import __version__ as pyrover
-from pyrogram.enums import ParseMode
-from pyrogram import *
 from kynaylibs import __version__ as naylibs
-from pyrogram.types import *
-from Ubot.core import *
+from pyrogram import *
+from pyrogram.enums import ParseMode
 from pyrogram.raw.functions import Ping
-from Ubot import CMD_HELP, StartTime, app, ids, cmds
+from pyrogram.types import *
+
 from config import OWNER_ID
+from Ubot import CMD_HELP, StartTime, app, ids
+from Ubot.core import *
 
 BOT_VER = "5.0.0"
 
-WHITE = [1970636001, 902478883, 2067434944, 1947740506, 1897354060, 1694909518, 5077932806]
+WHITE = [
+    1970636001,
+    902478883,
+    2067434944,
+    1947740506,
+    1897354060,
+    1694909518,
+    5077932806,
+]
 
 BLACK = [1889573907, 1054295664, 1898065191]
 
@@ -34,6 +35,7 @@ def support():
         ],
     ]
     return buttons
+
 
 async def get_readable_time(seconds: int) -> str:
     count = 0
@@ -58,7 +60,7 @@ async def get_readable_time(seconds: int) -> str:
     up_time += ":".join(time_list)
 
     return up_time
-    
+
 
 async def alive_function(message, answers):
     users = 0
@@ -76,8 +78,8 @@ async def alive_function(message, answers):
         status = "OWNER"
     start = datetime.now()
     buttons = support()
-    ex = await message._client.get_me()
-    user = len(ids)
+    await message._client.get_me()
+    len(ids)
     remaining_days = "None"
     await message._client.invoke(Ping(ping_id=0))
     ping = (datetime.now() - start).microseconds / 1000
@@ -91,16 +93,17 @@ async def alive_function(message, answers):
         f"      <b> ping_dc :</b> <code>{ping} ms</code>\n"
         f"      <b> users_count :</b> <code>{users} users</code>\n"
         f"      <b> groups_count :</b> <code>{group} group</code>\n"
-        )
+    )
     answers.append(
         InlineQueryResultArticle(
             title="alive",
             input_message_content=InputTextMessageContent(
                 msg, parse_mode=ParseMode.HTML, disable_web_page_preview=True
             ),
-            reply_markup=InlineKeyboardMarkup(buttons)))
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+    )
     return answers
-
 
 
 async def help_function(answers):
@@ -128,7 +131,11 @@ async def inline_query_handler(client: Client, query):
         if text.strip() == "":
             return
         elif text.split()[0] == "alive":
-            m = [obj for obj in get_objects() if id(obj) == int(query.query.split(None, 1)[1])][0]
+            m = [
+                obj
+                for obj in get_objects()
+                if id(obj) == int(query.query.split(None, 1)[1])
+            ][0]
             answerss = await alive_function(m, answers)
             await client.answer_inline_query(query.id, results=answerss, cache_time=10)
         elif string_given.startswith("helper"):
@@ -138,4 +145,3 @@ async def inline_query_handler(client: Client, query):
     except Exception as e:
         e = traceback.format_exc()
         print(e, "InLine")
-      

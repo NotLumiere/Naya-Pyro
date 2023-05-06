@@ -1,25 +1,20 @@
 import importlib
-import time
-from datetime import datetime
-import asyncio
-from pyrogram import idle
-
-from uvloop import install
-from ubotlibs import *
-from Ubot import aiosession, bots, app, ids, loop
 from platform import python_version as py
-from .logging import LOGGER
-from pyrogram import __version__ as pyro
+
 from kynaylibs import __version__ as nay
-from Ubot.modules import ALL_MODULES
-from Ubot.core.db import *
+from pyrogram import __version__ as pyro
+from pyrogram import idle
+from ubotlibs import *
+from uvloop import install
+
+from Ubot import aiosession, app, bots, ids, loop
 from Ubot.core import *
-from config import SUPPORT, CHANNEL
-import os
-from dotenv import load_dotenv
+from Ubot.core.db import *
+from Ubot.modules import ALL_MODULES
 
+from .logging import LOGGER
 
-BOT_VER ="8.1.0"
+BOT_VER = "8.1.0"
 
 
 MSG_ON = """
@@ -48,7 +43,9 @@ async def start_bot():
             await buat_log(bot)
             botlog_chat_id = await get_botlog(user_id)
             try:
-                await bot.send_message(botlog_chat_id, MSG_ON.format(BOT_VER, py(), pyro, nay))
+                await bot.send_message(
+                    botlog_chat_id, MSG_ON.format(BOT_VER, py(), pyro, nay)
+                )
             except BaseException as a:
                 LOGGER("Info").warning(f"{a}")
             LOGGER("Info").info("Startup Completed")
@@ -56,12 +53,13 @@ async def start_bot():
             ids.append(ex.id)
         except Exception as e:
             LOGGER("X").info(f"{e}")
-            
+
     await idle()
     install()
     await aiosession.close()
     await app.stop()
-    
+
+
 loop.run_until_complete(start_bot())
 
 

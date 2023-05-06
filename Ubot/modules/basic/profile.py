@@ -7,17 +7,15 @@
 
 import os
 from asyncio import sleep
-import os
-from . import *
 
-from ubotlibs.ubot.helper.PyroHelpers import ReplyCheck
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Message
 
-
+from . import *
 
 flood = {}
 profile_photo = "https://telegra.ph//file/94cc3c815a9e063dad4f0.jpg"
+
 
 async def list_admins(client: Client, chat_id: int):
     global admins_in_chat
@@ -97,9 +95,11 @@ async def extract_user_and_reason(message, sender_chat=False):
         return await extract_userid(message, user), reason
 
     return user, reason
-    
+
+
 async def extract_user(message):
     return (await extract_user_and_reason(message))[0]
+
 
 @Ubot(["unblock"], "")
 async def unblock_user_func(client: Client, message: Message):
@@ -121,9 +121,7 @@ async def block_user_func(client: Client, message: Message):
     user_id = await extract_user(message)
     tex = await message.reply_text("`Processing . . .`")
     if not user_id:
-        return await tex.edit_text(
-            "Berikan username untuk di blok."
-        )
+        return await tex.edit_text("Berikan username untuk di blok.")
     if user_id == client.me.id:
         return await tex.edit_text("ok ✅.")
     await client.block_user(user_id)
@@ -135,9 +133,7 @@ async def block_user_func(client: Client, message: Message):
 async def setname(client: Client, message: Message):
     tex = await message.reply_text("`Processing . . .`")
     if len(message.command) == 1:
-        return await tex.edit(
-            "Berikan text untuk diatur sebagai nama anda."
-        )
+        return await tex.edit("Berikan text untuk diatur sebagai nama anda.")
     elif len(message.command) > 1:
         name = message.text.split(None, 1)[1]
         try:
@@ -146,9 +142,7 @@ async def setname(client: Client, message: Message):
         except Exception as e:
             await tex.edit(f"**ERROR:** `{e}`")
     else:
-        return await tex.edit(
-            "Berikan text untuk diatur sebagai nama anda."
-        )
+        return await tex.edit("Berikan text untuk diatur sebagai nama anda.")
 
 
 @Ubot(["setbio"], "")
@@ -165,6 +159,7 @@ async def set_bio(client: Client, message: Message):
             await tex.edit(f"**ERROR:** `{e}`")
     else:
         return await tex.edit("Berikan text untuk diatur sebagai bio.")
+
 
 @Ubot(["setpp"], "")
 async def set_pfp(client: Client, message: Message):
@@ -184,13 +179,9 @@ async def set_pfp(client: Client, message: Message):
             os.remove(profile_photo)
         await message.reply_text("**Foto profil berhasil di ganti.**")
     else:
-        await message.reply_text(
-            "Balas ke gamabr/foto untuk atur sebagai foto profil"
-        )
+        await message.reply_text("Balas ke gamabr/foto untuk atur sebagai foto profil")
         await sleep(3)
         await message.delete()
-
-
 
 
 add_command_help(
@@ -200,6 +191,5 @@ add_command_help(
         [f"unblock", "membuka blokir"],
         [f"setname", "mengatur nama anda."],
         [f"setbio", "mengatur bio anda."],
-        
     ],
 )

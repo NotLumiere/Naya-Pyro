@@ -7,19 +7,21 @@
 
 import asyncio
 import os
-import speech_recognition as sr
+
 import ffmpeg
+import speech_recognition as sr
 from gtts import gTTS
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Message
-from ubotlibs.ubot.utils.tools import run_in_exc
-from . import *
 from ubotlibs.ubot.helper.basic import *
 from ubotlibs.ubot.utils.misc import *
 from ubotlibs.ubot.utils.tools import *
+from ubotlibs.ubot.utils.tools import run_in_exc
 
+from . import *
 
 lang = "id"
+
 
 @Ubot(["tts"], "")
 async def voice(client: Client, message):
@@ -69,23 +71,35 @@ async def voicelang(client: Client, message: Message):
         message, "**Bahasa untuk Voice Google diganti menjadi** `{}`".format(lang)
     )
 
+
 @Ubot(["stt"], "")
 async def speech_to_text(client, message):
     reply = message.reply_to_message
     if not (reply and reply.voice):
         return await message.edit("Mohon Balas Ke Pesan Suara")
     ajg = await message.reply("`Processing...`")
-    monyet = await client.download_media(message=reply, file_name='downloads/voice.ogg')
+    monyet = await client.download_media(message=reply, file_name="downloads/voice.ogg")
 
     @run_in_exc
     def convert_to_raw(audio_original, raw_file_name):
         stream = ffmpeg.input(audio_original)
-        stream = ffmpeg.output(stream, raw_file_name, format="wav", acodec="pcm_s16le", ac=2, ar="48k", loglevel="error").overwrite_output().run()
+        stream = (
+            ffmpeg.output(
+                stream,
+                raw_file_name,
+                format="wav",
+                acodec="pcm_s16le",
+                ac=2,
+                ar="48k",
+                loglevel="error",
+            )
+            .overwrite_output()
+            .run()
+        )
         return raw_file_name
 
-
     recognizer = sr.Recognizer()
-    babi = await convert_to_raw(monyet, 'downloads/voice.wav')
+    babi = await convert_to_raw(monyet, "downloads/voice.wav")
     with sr.AudioFile(babi) as source:
         audio = recognizer.record(source)
 
@@ -95,9 +109,7 @@ async def speech_to_text(client, message):
         return await ajg.edit("Mohon Periksa Apakah Itu Voice Note..")
     except sr.RequestError as e:
         return await ajg.edit("Error {0}".format(e))
-    await ajg.edit(
-        text=text
-    )
+    await ajg.edit(text=text)
     os.remove(babi)
     os.remove(monyet)
 

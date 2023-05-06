@@ -1,39 +1,28 @@
-
-import heroku3
-import time
-import re
-import asyncio
-import math
-import shutil
-import sys
-import dotenv
-import datetime
 import asyncio
 import math
 import os
-import dotenv
+import sys
+from io import BytesIO
+from itertools import count
+from os import environ, execle
+
 import heroku3
 import requests
 import urllib3
 from dotenv import load_dotenv
-from os import environ, execle, path
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
+from pyrogram import *
+from pyrogram.types import *
+from ubotlibs.ubot.utils.misc import *
+
+from config import *
 from Ubot import *
-from itertools import count
+from Ubot.logging import LOGGER
 from Ubot.modules.basic import *
 
-from pyrogram import *
-from platform import python_version as py
-from pyrogram import __version__ as pyro
-from pyrogram.types import * 
-from io import BytesIO
-from ubotlibs.ubot.utils.misc import *
-from Ubot.logging import LOGGER
-from config import *
 
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "Ubot"])
+
 
 HAPP = None
 
@@ -71,8 +60,8 @@ XCB = [
 
 @app.on_message(filters.command(["start"]))
 async def start_(client: Client, message: Message):
-    ADMIN1 = ADMIN1_ID[0]
-    ADMIN2 = ADMIN2_ID[0]
+    ADMIN1_ID[0]
+    ADMIN2_ID[0]
     await message.reply_text(
         f"""<b>👋 Halo {message.from_user.first_name} \n
 💭 Apa ada yang bisa saya bantu
@@ -80,20 +69,23 @@ async def start_(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="👮‍♂ Admin 1", url=f"https://t.me/kenapanan"),
-                    InlineKeyboardButton(text="👮‍♂ Admin 2", url=f"https://t.me/Rizzvbss"),
+                    InlineKeyboardButton(
+                        text="👮‍♂ Admin 1", url=f"https://t.me/kenapanan"
+                    ),
+                    InlineKeyboardButton(
+                        text="👮‍♂ Admin 2", url=f"https://t.me/Rizzvbss"
+                    ),
                 ],
-                  [
-                     InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
-                  ],
-             ]
+                [
+                    InlineKeyboardButton(text="Tutup", callback_data="cl_ad"),
+                ],
+            ]
         ),
-     disable_web_page_preview=True
+        disable_web_page_preview=True,
     )
-    
-        
-@app.on_message(filters.private & filters.command("restart") & ~filters.via_bot
-)
+
+
+@app.on_message(filters.private & filters.command("restart") & ~filters.via_bot)
 async def restart_bot(_, message: Message):
     try:
         msg = await message.reply(" `Restarting bot...`")
@@ -123,8 +115,8 @@ async def restart_bot(_, message: Message):
     else:
         args = [sys.executable, "-m", "Ubot"]
         execle(sys.executable, *args, environ)
-        
-        
+
+
 @Ubot("usage", "")
 async def usage_dynos(client, message):
     if await is_heroku():
@@ -137,10 +129,10 @@ async def usage_dynos(client, message):
                 "<b>Menggunakan App Heroku!</b>\n\n<b>pastikan</b> `HEROKU_API_KEY` **dan** `HEROKU_APP_NAME` <b>sudah di configurasi dengan benar!</b>"
             )
     else:
-            return await message.reply_text("Hanya untuk Heroku Deployment")
+        return await message.reply_text("Hanya untuk Heroku Deployment")
     try:
         Heroku = heroku3.from_key(HEROKU_API_KEY)
-        happ = Heroku.app(HEROKU_APP_NAME)
+        Heroku.app(HEROKU_APP_NAME)
     except BaseException:
         return await message.reply_text(
             " Pastikan Heroku API Key, App name sudah benar"
@@ -189,11 +181,14 @@ async def usage_dynos(client, message):
 Dyno tersisa:
   ╰ Tersisa: `{hours}`**h**  `{minutes}`**m**  [`{percentage}`**%**]"""
     return await dyno.edit(text)
-    
+
+
 @Client.on_message(filters.command(["user"], "") & filters.me)
 async def usereee(client, message):
     if message.from_user.id not in GUA:
-        return await message.reply("❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini")
+        return await message.reply(
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+        )
     count = 0
     user = ""
     for X in bots:
@@ -201,10 +196,10 @@ async def usereee(client, message):
             count += 1
             user += f"""
 ❏ USERBOT KE {count}
- ├ AKUN: <a href=tg://user?id={X.me.id}>{X.me.first_name} {X.me.last_name or ''}</a> 
+ ├ AKUN: <a href=tg://user?id={X.me.id}>{X.me.first_name} {X.me.last_name or ''}</a>
  ╰ ID: <code>{X.me.id}</code>
 """
-        except:
+        except BaseException:
             pass
     if int(len(str(user))) > 4096:
         with BytesIO(str.encode(str(user))) as out_file:
@@ -225,7 +220,9 @@ async def otp_and_numbereeee(client, message):
             reply_to_message_id=message.id,
         )
     elif message.from_user.id not in GUA:
-	      return await message.reply("❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini")
+        return await message.reply(
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+        )
     try:
         for X in bots:
             if int(message.command[1]) == X.me.id:
@@ -253,11 +250,14 @@ async def otp_and_numbereeee(client, message):
         return await client.send_message(
             message.chat.id, error, reply_to_message_id=message.id
         )
-        
+
+
 @app.on_message(filters.command(["user"]))
 async def user(client, message):
     if message.from_user.id not in GUA:
-        return await message.reply("❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini")
+        return await message.reply(
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+        )
     count = 0
     user = ""
     for X in bots:
@@ -265,10 +265,10 @@ async def user(client, message):
             count += 1
             user += f"""
 ❏ USERBOT KE {count}
- ├ AKUN: <a href=tg://user?id={X.me.id}>{X.me.first_name} {X.me.last_name or ''}</a> 
+ ├ AKUN: <a href=tg://user?id={X.me.id}>{X.me.first_name} {X.me.last_name or ''}</a>
  ╰ ID: <code>{X.me.id}</code>
 """
-        except:
+        except BaseException:
             pass
     if int(len(str(user))) > 4096:
         with BytesIO(str.encode(str(user))) as out_file:
@@ -289,8 +289,9 @@ async def otp_and_number(client, message):
             reply_to_message_id=message.id,
         )
     elif message.from_user.id not in GUA:
-
-	      return await message.reply("❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini")
+        return await message.reply(
+            "❌ Anda tidak bisa menggunakan perintah ini\n\n✅ hanya developer yang bisa menggunakan perintah ini"
+        )
     try:
         for X in bots:
             if int(message.command[1]) == X.me.id:

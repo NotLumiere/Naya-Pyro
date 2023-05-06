@@ -6,11 +6,14 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 import asyncio
+
 from pyrogram import Client
 from pyrogram.errors import YouBlockedUser
 from pyrogram.types import Message
-from . import *
 from ubotlibs.ubot.utils import extract_user
+
+from . import *
+
 
 @Ubot(["sg"], "")
 async def sg(client: Client, message: Message):
@@ -48,7 +51,8 @@ async def sg(client: Client, message: Message):
 add_command_help(
     "sangmata",
     [
-        [f"sg [reply/userid]",
+        [
+            f"sg [reply/userid]",
             "Mengambil info history pengguna.",
         ],
     ],

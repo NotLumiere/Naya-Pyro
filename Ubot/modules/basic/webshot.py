@@ -7,12 +7,11 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-import asyncio
-from pyrogram.types import *
 from pyrogram import *
+from pyrogram.types import *
 
 from . import *
-from ubotlibs.ubot.helper import edit_or_reply
+
 
 @Ubot(["ss"], "")
 async def webshot(client, message):
@@ -27,7 +26,9 @@ async def webshot(client, message):
                 caption=f"**Tangkapan layar halaman** {user_link}",
             )
         except Exception as dontload:
-            await message.edit(f"Error! `{dontload}`\nMencoba lagi membuat tangkapan layar...")
+            await message.edit(
+                f"Error! `{dontload}`\nMencoba lagi membuat tangkapan layar..."
+            )
             full_link = f"https://mini.s-shot.ru/1920x1080/JPEG/1024/Z100/?{user_link}"
             await client.send_photo(
                 message.chat.id,
@@ -39,9 +40,13 @@ async def webshot(client, message):
             message.chat.id, f"**Ada yang salah\nLog:`{error}`...**"
         )
 
+
 add_command_help(
     "webshot",
     [
-        [f"ss <link>", "Untuk screenshot halaman web yang diberikan",],
+        [
+            f"ss <link>",
+            "Untuk screenshot halaman web yang diberikan",
+        ],
     ],
 )

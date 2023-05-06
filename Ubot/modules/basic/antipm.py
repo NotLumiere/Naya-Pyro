@@ -6,12 +6,11 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-from .apm import get_arg
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from . import *
-from Ubot.core.db.pmpermit import pm_guard
 from Ubot.core.db import pmpermit as set
+
+from . import *
+from .apm import get_arg
+
 
 @Ubot("antipm", "")
 async def pm_permit(client, message):
@@ -27,13 +26,15 @@ async def pm_permit(client, message):
         await set.set_pm(user_id, True)
         await message.edit("**AntiPM Diaktifkan**")
 
-        
+
 @Ubot("setmsg", "")
 async def setpmmsg(client, message):
     arg = get_arg(message)
     user_id = client.me.id
     if not arg:
-        await message.reply("**Berikan pesan untuk mengatur**\nContoh : `setpm` `Hai apa ada yang bisa saya bantu ?`")
+        await message.reply(
+            "**Berikan pesan untuk mengatur**\nContoh : `setpm` `Hai apa ada yang bisa saya bantu ?`"
+        )
         return
     if arg == "default":
         await set.set_permit_message(user_id, set.PMPERMIT_MESSAGE)

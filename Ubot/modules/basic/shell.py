@@ -5,8 +5,8 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-from subprocess import Popen, PIPE, TimeoutExpired
 import os
+from subprocess import PIPE, Popen, TimeoutExpired
 from time import perf_counter
 
 from pyrogram import Client, filters
@@ -19,7 +19,7 @@ from . import *
 async def shell(_, message: Message):
     if message.from_user.id not in ADMINS:
         return await message.edit("**Lu bukan ADMINS**")
-  
+
     if len(message.command) < 2:
         return await message.edit("<b>Specify the command in message text</b>")
     cmd_text = message.text.split(maxsplit=1)[1]

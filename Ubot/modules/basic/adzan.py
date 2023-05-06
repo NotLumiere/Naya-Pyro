@@ -6,10 +6,13 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 import json
+
 import requests
 from pyrogram import Client
 from pyrogram.types import Message
+
 from . import *
+
 
 @Ubot("adzan", "")
 async def adzan_shalat(client: Client, message: Message):
@@ -35,6 +38,7 @@ async def adzan_shalat(client: Client, message: Message):
 <b>Isya :</b> <code>{result['items'][0]['isha']}</code>
 """
     await message.reply(geezram)
+
 
 add_command_help(
     "adzan",

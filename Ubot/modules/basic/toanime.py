@@ -7,14 +7,14 @@
 # Credits : TomiX
 
 
-import os
 import asyncio
-import time
-from pyrogram import Client, filters, enums
-from pyrogram.types import *
-from pyrogram.raw.functions.messages import DeleteHistory
-from . import *
+import os
 
+from pyrogram import Client, enums, filters
+from pyrogram.raw.functions.messages import DeleteHistory
+from pyrogram.types import *
+
+from . import *
 
 
 @Client.on_message(filters.command(["toanime"], "") & filters.me)
@@ -41,7 +41,6 @@ async def convert_image(client, message):
         )
         user_info = await client.resolve_peer(bot)
         return await client.invoke(DeleteHistory(peer=user_info, max_id=0, revoke=True))
-
 
 
 @Client.on_message(filters.command(["togif"], "") & filters.me)

@@ -6,20 +6,14 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-
-from pyrogram import Client, errors, filters
-from pyrogram.types import ChatPermissions, Message
-from pyrogram import Client 
-from pyrogram.enums import ChatType
 import asyncio
-from . import *
-from ubotlibs.ubot.helper import edit_or_reply
-from ubotlibs.ubot.utils.misc import *
-from ubotlibs.ubot.helper.PyroHelpers import get_ub_chats
 
+from pyrogram import Client, filters
+from pyrogram.enums import ChatType
 from ubotlibs.ubot.database.accesdb import *
+from ubotlibs.ubot.utils.misc import *
 
-
+from . import *
 
 
 @Client.on_message(
@@ -61,7 +55,7 @@ async def _(client, message):
                         await client.ban_chat_member(chat_id, user.id)
                         done += 1
                         await asyncio.sleep(0.1)
-                    except:
+                    except BaseException:
                         failed += 1
                         await asyncio.sleep(0.1)
         await nay.delete()
@@ -83,7 +77,7 @@ async def _(client, message):
                     await client.unban_chat_member(chat_id, user.id)
                     done += 1
                     await asyncio.sleep(0.1)
-                except:
+                except BaseException:
                     failed += 1
                     await asyncio.sleep(0.1)
         await nay.delete()
@@ -110,7 +104,7 @@ async def _(client, message):
                         await client.ban_chat_member(chat_id, user.id)
                         done += 1
                         await asyncio.sleep(0.1)
-                    except:
+                    except BaseException:
                         failed += 1
                         await asyncio.sleep(0.1)
         await nay.delete()
@@ -132,7 +126,7 @@ async def _(client, message):
                     await client.unban_chat_member(chat_id, user.id)
                     done += 1
                     await asyncio.sleep(0.1)
-                except:
+                except BaseException:
                     failed += 1
                     await asyncio.sleep(0.1)
         await nay.delete()

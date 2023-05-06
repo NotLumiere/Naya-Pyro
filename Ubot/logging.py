@@ -1,7 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
-from config import *
-import sys
+
 LOG_FILE_NAME = "logs.txt"
 
 logging.basicConfig(
@@ -23,6 +22,6 @@ logging.basicConfig(level=logging.INFO)
 
 LOGS = logging.getLogger(__name__)
 
+
 def LOGGER(name: str) -> logging.Logger:
     return logging.getLogger(name)
-    

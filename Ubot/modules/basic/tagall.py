@@ -7,11 +7,14 @@
 
 
 from asyncio import sleep
-from pyrogram import Client, filters
+
+from pyrogram import Client
 from pyrogram.types import Message
+
 from . import *
 
 spam_chats = []
+
 
 def get_arg(message: Message):
     msg = message.text
@@ -20,6 +23,7 @@ def get_arg(message: Message):
     if " ".join(split[1:]).strip() == "":
         return ""
     return " ".join(split[1:])
+
 
 @Ubot(["all"], "")
 async def mentionall(client: Client, message: Message):
@@ -33,7 +37,7 @@ async def mentionall(client: Client, message: Message):
     usrnum = 0
     usrtxt = ""
     async for usr in client.get_chat_members(chat_id):
-        if not chat_id in spam_chats:
+        if chat_id not in spam_chats:
             break
         usrnum += 1
         usrtxt += f"[{usr.user.first_name}](tg://user?id={usr.user.id}), "
@@ -48,18 +52,18 @@ async def mentionall(client: Client, message: Message):
             usrtxt = ""
     try:
         spam_chats.remove(chat_id)
-    except:
+    except BaseException:
         pass
 
 
 @Ubot(["batal"], "")
 async def cancel_spam(client: Client, message: Message):
-    if not message.chat.id in spam_chats:
+    if message.chat.id not in spam_chats:
         return await message.edit("**Oke dibatalkan.**")
     else:
         try:
             spam_chats.remove(message.chat.id)
-        except:
+        except BaseException:
             pass
         return await message.edit("**Berhasil membatalkan tagall.**")
 
@@ -67,10 +71,12 @@ async def cancel_spam(client: Client, message: Message):
 add_command_help(
     "tagall",
     [
-        [f"all [text/reply ke chat]",
+        [
+            f"all [text/reply ke chat]",
             f"Tag all the members one by one",
         ],
-        [f"batal",
+        [
+            f"batal",
             f"to stop tagall",
         ],
     ],

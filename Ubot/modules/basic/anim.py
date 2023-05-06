@@ -15,9 +15,12 @@ from pyrogram import Client, filters
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pyrogram.types import *
 from pyrogram.types import Message
-from . import *
 from ubotlibs.ubot.helper.basic import edit_or_reply, get_text
+
 from Ubot.core import MEMES
+
+from . import *
+
 DEFAULTUSER = "Nay"
 
 
@@ -26,7 +29,7 @@ NOBLE = [
     "┏━╮\n┃▔┃▂▂┏━━┓┏━┳━━━┓\n┃▂┣━━┻━╮┃┃▂┃▂┏━╯\n┃▔┃▔╭╮▔┃┃┃▔┃▔┗━┓\n┃▂┃▂╰╯▂┃┗╯▂┃▂▂▂┃\n┃▔┗━━━╮┃▔▔▔┃▔┏━╯\n┃▂▂▂▂▂┣╯▂▂▂┃▂┗━╮\n┗━━━━━┻━━━━┻━━━┛",
     "┏┓┏━┳━┳━┳━┓\n┃┗┫╋┣┓┃┏┫┻┫\n┗━┻━┛┗━┛┗━┛\n────­­­­­­­­­YOU────",
     "╦──╔╗─╗╔─╔ ─\n║──║║─║║─╠ ─\n╚═─╚╝─╚╝─╚ ─\n╦─╦─╔╗─╦╦   \n╚╦╝─║║─║║ \n─╩──╚╝─╚╝",
-    "╔══╗....<3 \n╚╗╔╝..('\../') \n╔╝╚╗..( •.• ) \n╚══╝..(,,)(,,) \n╔╗╔═╦╦╦═╗ ╔╗╔╗ \n║╚╣║║║║╩╣ ║╚╝║ \n╚═╩═╩═╩═╝ ╚══╝",
+    "╔══╗....<3 \n╚╗╔╝..('\\../') \n╔╝╚╗..( •.• ) \n╚══╝..(,,)(,,) \n╔╗╔═╦╦╦═╗ ╔╗╔╗ \n║╚╣║║║║╩╣ ║╚╝║ \n╚═╩═╩═╩═╝ ╚══╝",
     "░I░L░O░V░E░Y░O░U░",
     "┈┈╭━╱▔▔▔▔╲━╮┈┈┈\n┈┈╰╱╭▅╮╭▅╮╲╯┈┈┈\n╳┈┈▏╰┈▅▅┈╯▕┈┈┈┈\n┈┈┈╲┈╰━━╯┈╱┈┈╳┈\n┈┈┈╱╱▔╲╱▔╲╲┈┈┈┈\n┈╭━╮▔▏┊┊▕▔╭━╮┈╳\n┈┃┊┣▔╲┊┊╱▔┫┊┃┈┈\n┈╰━━━━╲╱━━━━╯┈╳",
     "╔ღ═╗╔╗\n╚╗╔╝║║ღ═╦╦╦═ღ\n╔╝╚╗ღ╚╣║║║║╠╣\n╚═ღ╝╚═╩═╩ღ╩═╝",
@@ -128,14 +131,12 @@ async def love(client: Client, message: Message):
         "🧡💛💚💙💜🖤💕💓💗💖",
     ]
     for i in animation_ttl:
-
         await asyncio.sleep(animation_interval)
         await message.edit(animation_chars[i % 14])
 
 
 @Client.on_message(
-    filters.me
-    & (filters.command(["loveyou"], "") | filters.regex("^loveyou "))
+    filters.me & (filters.command(["loveyou"], "") | filters.regex("^loveyou "))
 )
 async def _(client: Client, message: Message):
     noble = random.randint(1, len(NOBLE) - 2)
@@ -193,10 +194,7 @@ async def hello_world(client: Client, message: Message):
     )
 
 
-@Client.on_message(
-    filters.me
-    & (filters.command(["ahh"], "") | filters.regex("^ahh "))
-)
+@Client.on_message(filters.me & (filters.command(["ahh"], "") | filters.regex("^ahh ")))
 async def hello_world(client: Client, message: Message):
     mg = await edit_or_reply(message, "ahh")
     await asyncio.sleep(0.2)
@@ -239,7 +237,6 @@ async def pijtau(client: Client, message: Message):
         "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n           <(^_^ <)🗑",
     ]
     for i in animation_ttl:
-
         await asyncio.sleep(animation_interval)
         await message.edit(animation_chars[i % 14])
 
@@ -343,7 +340,6 @@ async def gagahkah(client: Client, message: Message):
         "[𝗪𝗵𝗮𝘁 𝗧𝗵𝗲 𝗙 𝗕𝗿𝗮𝗵](https://telegra.ph//file/f3b760e4a99340d331f9b.jpg)",
     ]
     for i in animation_ttl:
-
         await asyncio.sleep(animation_interval)
         await message.edit(animation_chars[i % 5])
 
@@ -402,9 +398,7 @@ async def okihakga(client: Client, message: Message):
         await message.edit(animation_chars[i % 15])
 
 
-@Client.on_message(
-    filters.command(["gangsta", "gang", "gangstar"], "") & filters.me
-)
+@Client.on_message(filters.command(["gangsta", "gang", "gangstar"], "") & filters.me)
 async def gajjajay(client: Client, message: Message):
     await message.edit("EVERyBOdy")
     await asyncio.sleep(0.3)
@@ -535,9 +529,7 @@ async def hak(client: Client, message: Message):
     )
 
 
-@Client.on_message(
-    filters.command(["kontol", "kntl"], "") & filters.me
-)
+@Client.on_message(filters.command(["kontol", "kntl"], "") & filters.me)
 async def kontol(client: Client, message: Message):
     emoji = get_text(message)
     kontol = MEMES.GAMBAR_KONTOL
@@ -546,9 +538,7 @@ async def kontol(client: Client, message: Message):
     await message.edit(kontol)
 
 
-@Client.on_message(
-    filters.command(["penis", "dick"], "") & filters.me
-)
+@Client.on_message(filters.command(["penis", "dick"], "") & filters.me)
 async def titid(client: Client, message: Message):
     emoji = get_text(message)
     titid = MEMES.GAMBAR_TITIT
@@ -614,9 +604,7 @@ async def adadino(client: Client, message: Message):
     await typew.edit("`-TAMAT-`")
 
 
-@Client.on_message(
-    filters.command(["syng", "syg"], "") & filters.me
-)
+@Client.on_message(filters.command(["syng", "syg"], "") & filters.me)
 async def zeyenk(client: Client, message: Message):
     e = await edit_or_reply(message, "I LOVEE YOUUU 💕")
     await e.edit("💝💘💓💗")
@@ -847,9 +835,7 @@ async def menggabut(client: Client, message: Message):
     await e.edit("`GABUT`")
 
 
-@Client.on_message(
-    filters.command(["helikopter", "heli"], "") & filters.me
-)
+@Client.on_message(filters.command(["helikopter", "heli"], "") & filters.me)
 async def helikopter(client: Client, message: Message):
     await edit_or_reply(
         message,

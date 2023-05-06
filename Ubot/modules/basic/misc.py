@@ -7,25 +7,28 @@
 
 
 import asyncio
-import random
-from datetime import datetime
-from platform import python_version
-from . import *
-from ubotlibs.ubot.helper.PyroHelpers import ReplyCheck
-from pyrogram import __version__, filters, Client
+
+from pyrogram import Client, filters
 from pyrogram.types import Message
-from Ubot import START_TIME, app
-from Ubot.modules.bot.inline import get_readable_time, BOT_VER
+
+from Ubot import app
+
+from . import *
 
 
 @Client.on_message(filters.command(["alive"], "") & filters.me)
 async def alive(client, message):
     bot_username = (await app.get_me()).username
     try:
-        tai = await client.get_inline_bot_results(bot=bot_username, query=f"alive {id(message)}")
+        tai = await client.get_inline_bot_results(
+            bot=bot_username, query=f"alive {id(message)}"
+        )
         await asyncio.gather(
             client.send_inline_bot_result(
-                message.chat.id, tai.query_id, tai.results[0].id, reply_to_message_id=message.id
+                message.chat.id,
+                tai.query_id,
+                tai.results[0].id,
+                reply_to_message_id=message.id,
             )
         )
     except Exception as e:

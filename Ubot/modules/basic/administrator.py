@@ -6,17 +6,14 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-
-import os
-import sys
-from re import sub
 import asyncio
 from time import time
-from pyrogram import Client, filters, enums
+
+from pyrogram import Client, enums, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import ChatPermissions, ChatPrivileges, Message
+
 from . import *
-from ubotlibs.ubot.helper.basic import eor
 from .profile import extract_user, extract_userid
 
 admins_in_chat = {}
@@ -29,6 +26,7 @@ unmute_permissions = ChatPermissions(
     can_invite_users=True,
     can_pin_messages=False,
 )
+
 
 async def list_admins(client: Client, chat_id: int):
     global admins_in_chat
@@ -84,6 +82,7 @@ async def extract_user_and_reason(message, sender_chat=False):
 
     return user, reason
 
+
 @Client.on_message(filters.command(["setgpic"], "") & filters.me)
 async def set_chat_photo(client: Client, message: Message):
     zuzu = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
@@ -99,7 +98,6 @@ async def set_chat_photo(client: Client, message: Message):
             return
     else:
         await message.edit("Balas ke photo untuk set!")
-
 
 
 @Client.on_message(filters.command(["ban", "dban"], "") & filters.me)
@@ -135,7 +133,6 @@ async def member_ban(client: Client, message: Message):
         return await message.edit("**Anda bukan admin di group ini !**")
 
 
-
 @Client.on_message(filters.command(["unban"], "") & filters.me)
 async def member_unban(client: Client, message: Message):
     reply = message.reply_to_message
@@ -148,9 +145,7 @@ async def member_unban(client: Client, message: Message):
     elif len(message.command) == 1 and reply:
         user = message.reply_to_message.from_user.id
     else:
-        return await message.edit(
-            "Berikan username, atau reply pesannya."
-        )
+        return await message.edit("Berikan username, atau reply pesannya.")
     try:
         await message.chat.unban_member(user)
         await asyncio.sleep(0.1)
@@ -159,7 +154,6 @@ async def member_unban(client: Client, message: Message):
         await message.edit(f"Unbanned! {umention}")
     except ChatAdminRequired:
         return await message.edit("**Anda bukan admin di group ini !**")
-
 
 
 @Client.on_message(filters.command(["pin", "unpin"], "") & filters.me)
@@ -209,7 +203,6 @@ async def mute(client: Client, message: Message):
         await message.edit(msg)
     except ChatAdminRequired:
         return await message.edit("**Anda bukan admin di group ini !**")
-
 
 
 @Client.on_message(filters.command(["unmute"], "") & filters.me)
@@ -265,8 +258,8 @@ async def promotte(client: Client, message: Message):
     biji = await message.reply("`Processing...`")
     if not user_id:
         return await message.edit("Pengguna tidak ditemukan.")
-    rd = (await client.get_chat_member(message.chat.id, client.me.id)).privileges
-    try: 
+    (await client.get_chat_member(message.chat.id, client.me.id)).privileges
+    try:
         if message.command[0][0] == "f":
             await message.chat.promote_member(
                 user_id,
@@ -344,14 +337,35 @@ add_command_help(
     "admin",
     [
         [f"ban [reply/username/userid]", "Ban pengguna."],
-        [f"unban [reply/username/userid]", "Unban pengguna.",],
+        [
+            f"unban [reply/username/userid]",
+            "Unban pengguna.",
+        ],
         [f"kick [reply/username/userid]", "kick pengguna dari group."],
-        [f"promote `or` .fullpromote","Promote pengguna.",],
+        [
+            f"promote `or` .fullpromote",
+            "Promote pengguna.",
+        ],
         [f"demote", "Demote pengguna."],
-        [f"mute [reply/username/userid]","Mute pengguna.",],
-        [f"unmute [reply/username/userid]","Unmute someone.",],
-        [f"pin [reply]","to pin any message.",],
-        [f"unpin [reply]","To unpin any message.",],
-        [f"setgpic [reply ke image]","To set an group profile pic",],
+        [
+            f"mute [reply/username/userid]",
+            "Mute pengguna.",
+        ],
+        [
+            f"unmute [reply/username/userid]",
+            "Unmute someone.",
+        ],
+        [
+            f"pin [reply]",
+            "to pin any message.",
+        ],
+        [
+            f"unpin [reply]",
+            "To unpin any message.",
+        ],
+        [
+            f"setgpic [reply ke image]",
+            "To set an group profile pic",
+        ],
     ],
 )

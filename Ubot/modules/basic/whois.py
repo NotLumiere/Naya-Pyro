@@ -8,12 +8,14 @@
 
 from asyncio import gather
 from os import remove
-from pyrogram import Client, filters
+
+from pyrogram import Client
 from pyrogram.enums import ChatType
 from pyrogram.types import Message
-from . import *
 from ubotlibs.ubot.helper.PyroHelpers import ReplyCheck
 from ubotlibs.ubot.utils import extract_user
+
+from . import *
 
 
 @Ubot(["info"], "")
@@ -142,10 +144,12 @@ async def chatinfo_handler(client: Client, message: Message):
 add_command_help(
     "info",
     [
-        [f"info <username/userid/reply>",
+        [
+            f"info <username/userid/reply>",
             "get telegram user info with full description.",
         ],
-        [f"cinfo <username/chatid/reply>",
+        [
+            f"cinfo <username/chatid/reply>",
             "get group info with full description.",
         ],
     ],

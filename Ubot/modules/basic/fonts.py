@@ -5,10 +5,9 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-from pyrogram import Client
-from pyrogram.types import Message
-from . import *
 from ubotlibs.ubot.helper import get_arg
+
+from . import *
 
 arguments = [
     "smallcap",
@@ -18,7 +17,7 @@ arguments = [
     "blackbubbles",
     "bubbles",
     "bold",
-    "bolditalic"
+    "bolditalic",
 ]
 
 fonts = [
@@ -29,7 +28,7 @@ fonts = [
     "blackbubbles",
     "bubbles",
     "bold",
-    "bolditalic"
+    "bolditalic",
 ]
 
 _default = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -51,13 +50,16 @@ def gen_font(text, new_font):
             text = text.replace(q, new)
     return text
 
+
 @Ubot(["font"], "")
 async def font_ubot(client, message):
     if message.reply_to_message or get_arg(message):
         font = get_arg(message)
         text = message.reply_to_message.text
         if not font:
-            return await message.reply(f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
+            return await message.reply(
+                f"<code>{font} Tidak Ada Dalam Daftar Font...</code>"
+            )
         if font == "smallcap":
             nan = gen_font(text, _smallcap)
         elif font == "monospace":

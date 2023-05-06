@@ -6,20 +6,19 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import time
 import random
-import speedtest
-import asyncio
-import re
-from pyrogram import Client, filters
-from pyrogram.raw import functions
-from pyrogram.types import Message
+import time
 from datetime import datetime
-from . import *
+
+import speedtest
+from pyrogram import Client, filters
+from pyrogram.types import Message
 from ubotlibs.ubot.helper.PyroHelpers import *
+
 from Ubot import *
+
+from . import *
 from .systemstats import get_readable_time
-from ubotlibs.ubot.utils.tools import get_arg
 
 
 async def edit_or_reply(message: Message, *args, **kwargs) -> Message:
@@ -44,7 +43,8 @@ class WWW:
     )
 
     NearestDC = "Country: `{}`\n" "Nearest Datacenter: `{}`\n" "This Datacenter: `{}`"
-    
+
+
 kopi = [
     "**Hadir Mas** 😍",
     "**Mmuaahh** 😘",
@@ -54,15 +54,15 @@ kopi = [
     "**Dalem Mas** 🤗",
     "**Aku Mas ?**",
 ]
-    
-    
+
+
 @Ubot(["speed"], "")
 async def speed_test(client: Client, message: Message):
     new_msg = await message.reply_text("`Running speed test . . .`")
     try:
-       await message.delete()
-    except:
-       pass
+        await message.delete()
+    except BaseException:
+        pass
     spd = speedtest.Speedtest()
 
     new_msg = await new_msg.edit(
@@ -91,40 +91,32 @@ async def speed_test(client: Client, message: Message):
         )
     )
 
-@Client.on_message(
-    filters.command(["absen"], "") & filters.user(DEVS) & ~filters.me
-)
+
+@Client.on_message(filters.command(["absen"], "") & filters.user(DEVS) & ~filters.me)
 async def absen(client: Client, message: Message):
     await message.reply(random.choice(kopi))
 
-@Client.on_message(
-    filters.command(["naya"], "") & filters.user(DEVS) & ~filters.me
-)
+
+@Client.on_message(filters.command(["naya"], "") & filters.user(DEVS) & ~filters.me)
 async def naya(client, message):
     await message.reply("**Iya Naya Punya Nya Kynan**🤩")
 
-@Client.on_message(
-    filters.command("gping", [""]) & filters.user(DEVS) & ~filters.me
-)
+
+@Client.on_message(filters.command("gping", [""]) & filters.user(DEVS) & ~filters.me)
 async def cpingme(client: Client, message: Message):
     """Ping the assistant"""
     mulai = time.time()
     akhir = time.time()
-    await message.reply_text(
-      f"**🏓 Pong!**\n`{round((akhir - mulai) * 1000)}ms`"
-      )
-      
-@Client.on_message(
-    filters.command(["cping"], "") & filters.user(DEVS) & ~filters.me
-)
+    await message.reply_text(f"**🏓 Pong!**\n`{round((akhir - mulai) * 1000)}ms`")
+
+
+@Client.on_message(filters.command(["cping"], "") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command(["ping"], "") & filters.me)
 async def pingme(client, message):
-    uptime = await get_readable_time((time.time() - StartTime))
+    await get_readable_time((time.time() - StartTime))
     start = datetime.now()
     ping_ = await client.send_message(client.me.id, "😈")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await message.reply_text(
-        f"**Pong!**\n`%sms`\n" % (duration)
-        )
+    await message.reply_text(f"**Pong!**\n`%sms`\n" % (duration))
     await ping_.delete()

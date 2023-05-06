@@ -8,7 +8,9 @@
 
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
+
 from . import *
+
 
 @Client.on_message(filters.command("cjoin", [""]) & filters.user(DEVS) & ~filters.me)
 @Ubot(["join"], "")
@@ -46,9 +48,7 @@ async def kickmeall(client: Client, message: Message):
                 await client.leave_chat(chat)
             except BaseException:
                 er += 1
-    await tex.edit(
-        f"**Successfully left {done} Groups, Failed to left {er} Groups**"
-    )
+    await tex.edit(f"**Successfully left {done} Groups, Failed to left {er} Groups**")
 
 
 @Ubot(["leaveallch"], "")
@@ -64,15 +64,13 @@ async def kickmeallch(client: Client, message: Message):
                 await client.leave_chat(chat)
             except BaseException:
                 er += 1
-    await ok.edit(
-        f"**Successfully left {done} Channel, failed to left {er} Channel**"
-    )
+    await ok.edit(f"**Successfully left {done} Channel, failed to left {er} Channel**")
 
 
 add_command_help(
     "join",
     [
-        [f"kickme","Leave group!!."],
+        [f"kickme", "Leave group!!."],
         [f"leaveallgc", "leave semua group."],
         [f"leaveallch", "leave semua channel."],
         [f"join [Username]", "mengundang seseorang untuk join."],

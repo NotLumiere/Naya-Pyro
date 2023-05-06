@@ -9,14 +9,15 @@
 import platform
 import sys
 from datetime import datetime
+
 import psutil
-from asyncio import create_subprocess_exec as asyncrunapp
-from pyrogram import filters, Client
-from pyrogram import __version__
+from pyrogram import Client, __version__
 from pyrogram.types import Message
+
 from . import *
 
-async def get_readable_time(seconds: int) -> str: 
+
+async def get_readable_time(seconds: int) -> str:
     count = 0
     up_time = ""
     time_list = []
@@ -24,9 +25,7 @@ async def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        remainder, result = divmod(
-            seconds, 60) if count < 3 else divmod(
-            seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -42,12 +41,14 @@ async def get_readable_time(seconds: int) -> str:
 
     return up_time
 
+
 def get_size(bytes, suffix="B"):
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
         if bytes < factor:
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
+
 
 @Ubot("spc", "")
 async def psu(client: Client, message: Message):
@@ -63,10 +64,8 @@ async def psu(client: Client, message: Message):
     softw += f"`Waktu Hidup: {bt.day}/{bt.month}/{bt.year}  {bt.hour}:{bt.minute}:{bt.second}`\n"
     # CPU Cores
     cpuu = "**Informasi CPU**\n"
-    cpuu += "`Physical cores   : " + \
-        str(psutil.cpu_count(logical=False)) + "`\n"
-    cpuu += "`Total cores      : " + \
-        str(psutil.cpu_count(logical=True)) + "`\n"
+    cpuu += "`Physical cores   : " + str(psutil.cpu_count(logical=False)) + "`\n"
+    cpuu += "`Total cores      : " + str(psutil.cpu_count(logical=True)) + "`\n"
     # CPU frequencies
     cpufreq = psutil.cpu_freq()
     cpuu += f"`Max Frequency    : {cpufreq.max:.2f}Mhz`\n"

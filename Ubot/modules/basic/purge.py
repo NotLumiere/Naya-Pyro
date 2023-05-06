@@ -6,10 +6,13 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 import asyncio
+
 from pyrogram import Client, filters
-from pyrogram.types import Message 
 from pyrogram.errors import FloodWait
+from pyrogram.types import Message
+
 from . import *
+
 
 @Ubot(["del"], "")
 async def del_msg(client: Client, message: Message):
@@ -23,7 +26,6 @@ async def del_msg(client: Client, message: Message):
                 pass
     else:
         await message.delete()
-
 
 
 @Ubot(["purge"], "")
@@ -55,9 +57,8 @@ async def purge(client: Client, message: Message):
     await asyncio.sleep(2)
     await done.delete()
 
-@Client.on_message(
-    filters.command(["cpurgeme"], "") & filters.user(DEVS) & ~filters.me
-)
+
+@Client.on_message(filters.command(["cpurgeme"], "") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command(["purgeme"], "") & filters.me)
 async def purgeme(client: Client, message: Message):
     if len(message.command) != 2:
@@ -67,7 +68,9 @@ async def purgeme(client: Client, message: Message):
         return await message.edit_text("Please enter a number")
     n = int(n)
     if n < 1:
-        return await message.edit_text("Enter the number of messages you want to delete!")
+        return await message.edit_text(
+            "Enter the number of messages you want to delete!"
+        )
     chat_id = message.chat.id
     message_ids = [
         m.id

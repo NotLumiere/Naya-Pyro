@@ -7,24 +7,23 @@
 
 
 import asyncio
+import os
 import socket
 import sys
-import os
-import aiohttp
-import asyncio
-from os import getenv
 from datetime import datetime
 from os import environ, execle, path, remove
 
+import aiohttp
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from . import *
-from config import GIT_TOKEN, REPO_URL, BRANCH
+
 from config import *
+from config import BRANCH, GIT_TOKEN, REPO_URL
 from Ubot.modules.bot.start import GUA
 
+from . import *
 
 XCB = [
     "/",
@@ -43,6 +42,7 @@ XCB = [
 ]
 
 BASE = "https://batbin.me/"
+
 
 def get_arg(message: Message):
     msg = message.text
@@ -70,14 +70,15 @@ async def PasteBin(text):
     link = BASE + resp["message"]
     return link
 
+
 if GIT_TOKEN:
     GIT_USERNAME = REPO_URL.split("com/")[1].split("/")[0]
     TEMP_REPO = REPO_URL.split("https://")[1]
     UPSTREAM_REPO = f"https://{GIT_USERNAME}:{GIT_TOKEN}@{TEMP_REPO}"
 if GIT_TOKEN:
-   UPSTREAM_REPO_URL = UPSTREAM_REPO
+    UPSTREAM_REPO_URL = UPSTREAM_REPO
 else:
-   UPSTREAM_REPO_URL = REPO_URL
+    UPSTREAM_REPO_URL = REPO_URL
 
 requirements_path = path.join(
     path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
@@ -87,8 +88,10 @@ requirements_path = path.join(
 def restart():
     os.execvp(sys.executable, [sys.executable, "-m", "Ubot"])
 
+
 async def is_heroku():
     return "heroku" in socket.getfqdn()
+
 
 async def bash(cmd):
     process = await asyncio.create_subprocess_shell(
@@ -125,9 +128,8 @@ async def updateme_requirements():
     except Exception as e:
         return repr(e)
 
-@Client.on_message(
-    filters.command(["cping"], "") & filters.user(GUA) & ~filters.me
-)
+
+@Client.on_message(filters.command(["cping"], "") & filters.user(GUA) & ~filters.me)
 @Client.on_message(filters.command(["update"], "") & filters.me)
 async def upstream(client, message):
     status = await message.edit("`Checking for Updates, Wait a Moment...`")
@@ -282,10 +284,13 @@ async def updatees(client, message):
     if verification == "":
         return await response.edit("Bot is up-to-date!")
     updates = ""
-    ordinal = lambda format: "%d%s" % (
-        format,
-        "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
-    )
+
+    def ordinal(format):
+        return "%d%s" % (
+            format,
+            "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
+        )
+
     for info in repo.iter_commits(f"HEAD..origin/{BRANCH}"):
         updates += f"<b>➣ #{info.count()}: [{info.summary}]({REPO_}/commit/{info}) by -> {info.author}</b>\n\t\t\t\t<b>➥ Commited on:</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
     _update_response_ = "<b>A new update is available for the Bot!</b>\n\n➣ Pushing Updates Now</code>\n\n**<u>Updates:</u>**\n\n"

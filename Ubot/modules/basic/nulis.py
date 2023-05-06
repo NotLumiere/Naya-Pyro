@@ -6,10 +6,10 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
-from . import *
 import requests
+
+from . import *
+
 
 @Ubot("nulis", "")
 async def handwrite(client, message):
@@ -20,14 +20,17 @@ async def handwrite(client, message):
     nan = await message.reply("`Processing...`")
     ajg = requests.get(f"https://api.sdbots.tk/write?text={naya}").url
     await message.reply_photo(
-        photo=ajg,
-        caption=f"**Ditulis Oleh :** {client.me.mention}")
+        photo=ajg, caption=f"**Ditulis Oleh :** {client.me.mention}"
+    )
     await nan.delete()
 
 
 add_command_help(
     "nulis",
     [
-        [f"nulis [berikan pesan/balas ke pesan]", "Membuat Tulisan Untuk Kamu Yang Malas Nulis."],
+        [
+            f"nulis [berikan pesan/balas ke pesan]",
+            "Membuat Tulisan Untuk Kamu Yang Malas Nulis.",
+        ],
     ],
 )

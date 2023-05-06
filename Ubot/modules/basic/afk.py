@@ -6,20 +6,23 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 from datetime import datetime
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from Ubot.core.db import *
-from ubotlibs.ubot.utils import get_text
-from . import *
 
+from pyrogram import Client, filters
+from ubotlibs.ubot.utils import get_text
+
+from Ubot.core.db import *
+
+from . import *
 
 afk_sanity_check: dict = {}
 afkstr = """
 #AFK Aktif\n Alasan {}
 """
-onlinestr ="""
+onlinestr = """
 #AFK Tidak Aktif\nAlasan {}
 """
+
+
 async def is_afk_(f, client, message):
     user_id = client.me.id
     af_k_c = await check_afk(user_id)
@@ -27,13 +30,17 @@ async def is_afk_(f, client, message):
         return bool(True)
     else:
         return bool(False)
-    
+
+
 is_afk = filters.create(func=is_afk_, name="is_afk_")
+
 
 @Ubot("afk", "")
 async def set_afk(client, message):
     if len(message.command) == 1:
-        return await message.reply(f"**Gunakan format dengan berikan alasan**\n\n**Contoh** : `afk berak`")
+        return await message.reply(
+            f"**Gunakan format dengan berikan alasan**\n\n**Contoh** : `afk berak`"
+        )
     user_id = client.me.id
     botlog = await get_log_groups(user_id)
     pablo = await message.edit("Processing..")
@@ -50,6 +57,7 @@ async def set_afk(client, message):
         await client.send_message(botlog, afkstr.format(msge))
         await go_afk(user_id, afk_start)
     await pablo.edit(msg)
+
 
 @Client.on_message(
     is_afk
@@ -72,9 +80,7 @@ async def afk_er(client, message):
     else:
         afk_sanity_check[use_r] += 1
     if afk_sanity_check[use_r] == 5:
-        await message.reply_text(
-            "**❏ Sedang AFK**."
-        )
+        await message.reply_text("**❏ Sedang AFK**.")
         afk_sanity_check[use_r] += 1
         return
     if afk_sanity_check[use_r] > 5:
@@ -93,7 +99,7 @@ async def afk_er(client, message):
         else f"**❏ Sedang AFK**\n** ╰ Waktu** :`{total_afk_time}`"
     )
     await message.reply(message_to_reply)
-    
+
 
 @Client.on_message(filters.outgoing & filters.me & is_afk)
 async def no_afke(client, message):
@@ -104,15 +110,20 @@ async def no_afke(client, message):
     afk_start = lol["time"]
     afk_end = back_alivee.replace(microsecond=0)
     total_afk_time = str((afk_end - afk_start))
-    kk = await message.reply(f"**❏ Saya Kembali.**\n** ╰ AFK Selama** : {total_afk_time}")
+    kk = await message.reply(
+        f"**❏ Saya Kembali.**\n** ╰ AFK Selama** : {total_afk_time}"
+    )
     await kk.delete()
     await no_afk(user_id)
     await client.send_message(botlog, onlinestr.format(total_afk_time))
 
+
 add_command_help(
     "afk",
     [
-        [f"afk","Mengaktifkan mode afk.",
+        [
+            f"afk",
+            "Mengaktifkan mode afk.",
         ],
     ],
 )

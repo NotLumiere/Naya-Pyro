@@ -15,7 +15,7 @@ import random
 
 from pyrogram.types import InputMediaPhoto
 
-from . import * 
+from . import *
 
 
 @Ubot(["pic"], "")
@@ -37,7 +37,7 @@ async def pic_bing_cmd(client, message):
             )
             get_media.append(InputMediaPhoto(saved.photo.file_id))
             await saved.delete()
-        except:
+        except BaseException:
             await TM.edit(f"<b>❌ Image Photo Ke {X} Tidak Ditemukan</b>")
     await client.send_media_group(
         message.chat.id,
@@ -59,7 +59,7 @@ async def gif_cmd(client, message):
         saved = await client.send_inline_bot_result(
             client.me.id, x.query_id, x.results[random.randrange(30)].id
         )
-    except:
+    except BaseException:
         await message.reply("<b>❌ Gif tidak ditemukan</b>")
         await TM.delete()
     saved = await client.get_messages(client.me.id, int(saved.updates[1].message.id))
@@ -71,7 +71,8 @@ async def gif_cmd(client, message):
 
 
 add_command_help(
-    "search",[
+    "search",
+    [
         [f"gif <query>", "Membuat mencari gif."],
         [f"pic <query>", "Mencari gambar."],
     ],

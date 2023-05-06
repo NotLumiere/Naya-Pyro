@@ -7,10 +7,9 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import random 
+import random
+
 from . import *
-
-
 
 
 @Ubot(["meme", "memes"], "")
@@ -29,4 +28,3 @@ async def _(client, message):
     )
     await saved.delete()
     await TM.delete()
-

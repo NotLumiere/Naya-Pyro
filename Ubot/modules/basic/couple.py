@@ -8,11 +8,11 @@
 import random
 from datetime import datetime
 
-from pyrogram import filters, Client
 from pyrogram.enums import ChatType
 
-from . import *
 from Ubot.core.db import get_couple, save_couple
+
+from . import *
 
 
 # Date and time
@@ -41,7 +41,9 @@ tomorrow = str(dt_tom())
 @Ubot(["couple", "cp"], "")
 async def couple(client, message):
     if message.chat.type == ChatType.PRIVATE:
-        return await message.reply_text("Perintah ini hanya dapat digunakan dalam grup.")
+        return await message.reply_text(
+            "Perintah ini hanya dapat digunakan dalam grup."
+        )
     try:
         chat_id = message.chat.id
         is_selected = await get_couple(chat_id, today)
@@ -80,11 +82,11 @@ __Pasangan baru dipilih {tomorrow}__"""
     except Exception as e:
         print(e)
         await message.reply_text(e)
-        
+
+
 add_command_help(
     "couple",
     [
-        [f"couple atau cp",
-            "Melihat Pasangan.[Gunakan Dalam Grup]"],
+        [f"couple atau cp", "Melihat Pasangan.[Gunakan Dalam Grup]"],
     ],
 )

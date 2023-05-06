@@ -5,30 +5,20 @@
 # © @KynanSupport
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
-import asyncio
-import pyromod
-from io import BytesIO
 import io
 import os
 import sys
-import re
 import traceback
-import subprocess
-from random import randint
-from typing import Optional
-from contextlib import suppress, redirect_stdout
-from asyncio import sleep
+from contextlib import redirect_stdout
 from io import StringIO
-from pyrogram.types import *
+
 from pyrogram import *
+from pyrogram import Client, filters
+from pyrogram.types import *
+from pyrogram.types import Message
 from pyromod import *
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
-
-
 from . import *
-
 
 
 # noinspection PyUnusedLocal
@@ -36,12 +26,11 @@ from . import *
 async def user_exec(client: Client, message: Message):
     if message.from_user.id not in ADMINS:
         return await message.edit("**Lu bukan ADMINS**")
-        
-  
+
     if len(message.command) == 1:
         return await message.edit("<b>Code to execute isn't provided</b>")
 
-    reply = message.reply_to_message
+    message.reply_to_message
 
     code = message.text.split(maxsplit=1)[1]
     stdout = StringIO()
@@ -63,7 +52,6 @@ async def user_exec(client: Client, message: Message):
             await message.edit(text)
     except Exception as e:
         await message.edit(format_exc(e, f"Code was <code>{code}</code>"))
-
 
 
 @Client.on_message(filters.command(["ev"], "") & filters.me)

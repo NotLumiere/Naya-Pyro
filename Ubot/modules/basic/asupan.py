@@ -6,15 +6,17 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import asyncio
 from asyncio import gather
 from random import choice
-from pyrogram import Client, filters, enums
-from pyrogram.types import ChatPermissions, ChatPrivileges, Message
-from ubotlibs.ubot.helper import edit_or_reply, ReplyCheck
-from . import *
+
+from pyrogram import Client, enums
+from pyrogram.types import Message
 from ubotlibs.ubot.database.accesdb import *
+from ubotlibs.ubot.helper import ReplyCheck
+
 from config import *
+
+from . import *
 
 
 @Ubot(["asupan"], "")
@@ -38,7 +40,9 @@ async def asupan(client: Client, message: Message):
         ),
     )
 
+
 # WARNING PORNO VIDEO THIS !!!
+
 
 @Ubot(["Bokep"], "")
 async def asupin(client: Client, message: Message):
@@ -102,8 +106,8 @@ async def pcp(client, message):
     )
 
     await darmi.delete()
-    
-    
+
+
 @Ubot(["ppcp2"], "")
 async def cp(client, message):
     if message.chat.id in BL_UBOT:
@@ -123,8 +127,8 @@ async def cp(client, message):
     )
 
     await dar.delete()
-    
-    
+
+
 @Ubot(["anime"], "")
 async def anim(client, message):
     if message.chat.id in BL_UBOT:
@@ -144,8 +148,8 @@ async def anim(client, message):
     )
 
     await iis.delete()
-    
-   
+
+
 @Ubot(["anime2"], "")
 async def nimek(client, message):
     if message.chat.id in BL_UBOT:
@@ -165,8 +169,8 @@ async def nimek(client, message):
     )
 
     await erna.delete()
-    
-    
+
+
 @Ubot(["bugil"], "")
 async def sange(client, message):
     if message.chat.id in BL_GCAST:
@@ -186,7 +190,8 @@ async def sange(client, message):
     )
 
     await kntl.delete()
-    
+
+
 @Ubot(["pap"], "")
 async def bugil(client, message):
     if message.chat.id in BL_UBOT:
@@ -209,9 +214,16 @@ async def bugil(client, message):
 
 
 add_command_help(
-    "asupan",[
-        [f"pap", "Random PAP",],
-        [f"asupan", "Asupan video TikTok",],
+    "asupan",
+    [
+        [
+            f"pap",
+            "Random PAP",
+        ],
+        [
+            f"asupan",
+            "Asupan video TikTok",
+        ],
         [f"ayang", "Mencari Foto ayang kamu /nNote: Modul ini buat cwo yang jomblo."],
         [f"ppcp", "Mencari Foto PP Couple Random."],
         [f"ppcp2", "Mencari Foto PP Couple Random 2."],

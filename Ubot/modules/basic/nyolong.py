@@ -11,13 +11,14 @@
 import os
 
 from pyrogram import *
-from pyrogram import Client, filters
 from pyrogram.errors import RPCError
 from pyrogram.types import *
-
 from ubotlibs.ubot.utils import get_arg
+
 from Ubot.core.db import get_botlog
+
 from . import *
+
 
 @Ubot("copy", "")
 async def nyolongnih(client, message):
@@ -118,14 +119,10 @@ async def pencuri(client, message):
         await message.edit("Sepertinya terjadi kesalahan")
 
 
-
 add_command_help(
     "nyolong",
     [
-        [
-            "copy <link protected channel.>",
-            "Clone restricted media."],
-        [   "curi <reply message>",
-            "Clone from the protected media or timer message."],
+        ["copy <link protected channel.>", "Clone restricted media."],
+        ["curi <reply message>", "Clone from the protected media or timer message."],
     ],
 )

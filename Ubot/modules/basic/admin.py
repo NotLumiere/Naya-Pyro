@@ -6,14 +6,14 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
-import html
-import time
 import asyncio
+import html
+
 from pyrogram import Client, enums
 from pyrogram.types import Message
-from . import *
-from ubotlibs.ubot.helper.basic import edit_or_reply
 from ubotlibs.ubot.helper.parser import mention_html, mention_markdown
+
+from . import *
 
 
 @Ubot(["admin"], "")
@@ -36,7 +36,7 @@ async def adminlist(client: Client, message: Message):
     ):
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"
@@ -94,9 +94,7 @@ async def kickdel_cmd(client: Client, message: Message):
         return await message.edit(format_exc(e))
     await asyncio.sleep(0.1)
     await kk.delete()
-    await message.edit(
-        f"<b>Berhasil ditendang {len(values)} akun depresi (s)</b>"
-    )
+    await message.edit(f"<b>Berhasil ditendang {len(values)} akun depresi (s)</b>")
 
 
 @Ubot("report", "")
@@ -171,7 +169,6 @@ async def tag_all_users(client: Client, message: Message):
 
 
 @Ubot(["Bots"], "")
-
 async def get_list_bots(client: Client, message: Message):
     replyid = None
     if len(message.text.split()) >= 2:
@@ -187,7 +184,7 @@ async def get_list_bots(client: Client, message: Message):
     async for a in getbots:
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"
@@ -203,11 +200,12 @@ async def get_list_bots(client: Client, message: Message):
     else:
         await message.reply(teks)
 
+
 add_command_help(
     "misc",
     [
         [f"admins", "Get chats Admins list."],
         [f"zombies", "To Kick deleted Accounts."],
-        [f"botlist","To get Chats Bots list"],
+        [f"botlist", "To get Chats Bots list"],
     ],
 )

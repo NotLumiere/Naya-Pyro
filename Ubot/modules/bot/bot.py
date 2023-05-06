@@ -1,20 +1,17 @@
-
 import traceback
-import re
+
 from pyrogram import Client, filters
-from pyrogram.errors import MessageDeleteForbidden
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 
 from Ubot import CMD_HELP, app
-from Ubot.core import *
 from Ubot import ids as users
-from config import SUPPORT, CHANNEL
+from Ubot.core import *
 
 
 @Client.on_callback_query()
 async def _callbacks(_, callback_query: CallbackQuery):
     query = callback_query.data.lower()
-    bot_me = await app.get_me()
+    await app.get_me()
     if query == "helper":
         buttons = paginate_help(0, CMD_HELP, "helpme")
         await app.edit_inline_text(
@@ -27,7 +24,7 @@ async def _callbacks(_, callback_query: CallbackQuery):
         return
     elif query == "close_help":
         if callback_query.from_user.id not in users:
-           return
+            return
         await app.edit_inline_text(
             callback_query.inline_message_id,
             "**ᴄʟᴏsᴇ**",
@@ -54,11 +51,12 @@ async def _callbacks(_, callback_query: CallbackQuery):
         except Exception as e:
             e = traceback.format_exc()
             print(e, "Callbacks")
-            
+
 
 @app.on_callback_query(filters.regex("cl_ad"))
 async def close(_, query: CallbackQuery):
     await query.message.delete()
+
 
 @app.on_callback_query(filters.regex("ub_modul_(.*)"))
 # @cb_wrapper
@@ -67,7 +65,9 @@ async def on_plug_in_cb(_, callback_query: CallbackQuery):
     commands: dict = CMD_HELP[modul_name]
     this_command = f"**Bantuan Untuk {str(modul_name).upper()}**\n\n"
     for x in commands:
-        this_command += f"๏ **Perintah:** `{str(x)}`\n◉ **Keterangan:** `{str(commands[x])}`\n\n"
+        this_command += (
+            f"๏ **Perintah:** `{str(x)}`\n◉ **Keterangan:** `{str(commands[x])}`\n\n"
+        )
     this_command += "@KynanSupport"
     bttn = [
         [InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data="reopen")],
@@ -95,7 +95,7 @@ async def reopen_in_cb(_, callback_query: CallbackQuery):
     )
 
 
-@app.on_callback_query(filters.regex("helpme_prev\((.+?)\)"))
+@app.on_callback_query(filters.regex("helpme_prev\\((.+?)\\)"))
 # @cb_wrapper
 async def on_plug_prev_in_cb(_, callback_query: CallbackQuery):
     current_page_number = int(callback_query.matches[0].group(1))
@@ -107,7 +107,7 @@ async def on_plug_prev_in_cb(_, callback_query: CallbackQuery):
     )
 
 
-@app.on_callback_query(filters.regex("helpme_next\((.+?)\)"))
+@app.on_callback_query(filters.regex("helpme_next\\((.+?)\\)"))
 # @cb_wrapper
 async def on_plug_next_in_cb(_, callback_query: CallbackQuery):
     current_page_number = int(callback_query.matches[0].group(1))

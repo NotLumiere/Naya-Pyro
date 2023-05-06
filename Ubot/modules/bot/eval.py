@@ -1,20 +1,15 @@
 import os
-import re
-import subprocess
 import sys
 import traceback
-from html import escape
 from inspect import getfullargspec
 from io import StringIO
-from time import time
 
 from pyrogram import filters
-from pyrogram.errors import MessageNotModified
-from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
-                            Message, ReplyKeyboardMarkup)
+from pyrogram.types import Message
 
 from Ubot import *
 from Ubot.modules.basic import DEVS
+
 
 async def aexec(code, client, message):
     exec(
@@ -67,7 +62,7 @@ async def executor(client, message):
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
             out_file.write(str(evaluation.strip()))
-        
+
         await message.reply_document(
             document=filename,
             caption=f"**INPUT:**\n`{cmd[0:980]}`\n\n**OUTPUT:**\n`Attached Document`",
@@ -77,5 +72,4 @@ async def executor(client, message):
         await message.delete()
         os.remove(filename)
     else:
-        
         await edit_or_reply(message, text=final_output)

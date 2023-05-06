@@ -7,11 +7,13 @@
 
 
 import asyncio
-from pyrogram import Client, filters
+
+from pyrogram import Client
 from pyrogram.types import Message
-from . import *
 from ubotlibs.ubot.helper.basic import edit_or_reply
 from ubotlibs.ubot.helper.PyroHelpers import ReplyCheck
+
+from . import *
 
 
 @Ubot("p", "")
@@ -62,12 +64,12 @@ async def jwbsalamlngkp(client: Client, message: Message):
     )
 
 
-
 @Ubot("as", "")
 async def salamarab(client: Client, message: Message):
     xx = await edit_or_reply(message, "Salam Dulu Gua..")
     await asyncio.sleep(2)
     await xx.edit("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ")
+
 
 add_command_help(
     "salam",
@@ -76,5 +78,5 @@ add_command_help(
         [f"pe", "Assalamualaikum Warahmatullahi Wabarakatuh."],
         [f"l", "Wa'alaikumsalam."],
         [f"as", "Assalamualaikum Bahas arab."],
-    ]
+    ],
 )

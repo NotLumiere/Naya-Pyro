@@ -6,13 +6,13 @@
 # FULL MONGO NIH JING FIX MULTI CLIENT
 
 
+from pyrogram import Client, enums, filters
 from ubotlibs.ubot.utils.tools import get_arg
-from pyrogram import filters, Client, enums
-from pyrogram.types import Message
-from . import *
-from Ubot.core.db import set_botlog, get_botlog
-from Ubot.core.db.pmpermit import *
+
 from Ubot.core.db import pmpermit as set
+from Ubot.core.db.pmpermit import *
+
+from . import *
 
 PM_LOGGER = 1
 FLOOD_CTRL = 0
@@ -22,13 +22,13 @@ USERS_AND_WARNS = {}
 
 async def denied_users(filter, client, message):
     user_id = client.me.id
-    chat_id = message.chat.id
+    message.chat.id
     if not await pm_guard(user_id):
         return False
     if message.chat.id in (await get_approved_users(user_id)):
         return False
     else:
-         return True
+        return True
 
 
 @Ubot("setlimit", "")
@@ -36,7 +36,9 @@ async def pmguard(client, message):
     user_id = client.me.id
     arg = get_arg(message)
     if not arg:
-        await message.edit("<b>Berikan Angka</b>\n<b>Contoh</b>: `setlimit 5` defaultnya adalah 5.")
+        await message.edit(
+            "<b>Berikan Angka</b>\n<b>Contoh</b>: `setlimit 5` defaultnya adalah 5."
+        )
         return
     await set.set_limit(user_id, int(arg))
     await message.edit(f"<b>Limit set to {arg}</b>")
@@ -47,7 +49,9 @@ async def setpmmsg(client, message):
     user_id = client.me.id
     arg = get_arg(message)
     if not arg:
-        await message.edit("**Berikan Saya Pesan**\n**Contoh**: `blockmsg Spammer detected was **BLOCKED**`\nAtau Gunakan `blockmsg default` Untuk Nengatur ke default.")
+        await message.edit(
+            "**Berikan Saya Pesan**\n**Contoh**: `blockmsg Spammer detected was **BLOCKED**`\nAtau Gunakan `blockmsg default` Untuk Nengatur ke default."
+        )
         return
     if arg == "default":
         await set.set_block_message(user_id, set.BLOCKED)
@@ -60,7 +64,7 @@ async def setpmmsg(client, message):
 @Client.on_message(filters.command(["a", "ok"], "") & filters.me & filters.private)
 async def allow(client, message):
     user_id = client.me.id
-    biji = message.from_user.first_name
+    message.from_user.first_name
     chat_id = message.chat.id
     pmpermit, pm_message, limit, block_message = await get_pm_settings(user_id)
     await set.allow_user(chat_id)
@@ -74,11 +78,13 @@ async def allow(client, message):
 
 @Client.on_message(filters.command(["d", "no"], "") & filters.me & filters.private)
 async def deny(client, message):
-    user_id = client.me.id
-    biji = message.from_user.first_name
+    client.me.id
+    message.from_user.first_name
     chat_id = message.chat.id
     await set.deny_user(chat_id)
-    await message.edit(f"**Saya belum menyetujui [Anda](tg://user?id={chat_id}) untuk mengirim pesan.**")
+    await message.edit(
+        f"**Saya belum menyetujui [Anda](tg://user?id={chat_id}) untuk mengirim pesan.**"
+    )
 
 
 @Client.on_message(
@@ -92,7 +98,7 @@ async def deny(client, message):
 async def reply_pm(client, message):
     user_id = client.me.id
     chat_id = message.chat.id
-    #botlog_chat_id = await get_log_groups(user_id)
+    # botlog_chat_id = await get_log_groups(user_id)
     global FLOOD_CTRL
     pmpermit, pm_message, limit, block_message = await set.get_pm_settings(user_id)
     user = message.from_user.id
@@ -100,13 +106,13 @@ async def reply_pm(client, message):
     user_warns = 0 if user not in USERS_AND_WARNS else USERS_AND_WARNS[user]
     if user in DEVS:
         try:
-            await set.allow_user(chat_id) 
+            await set.allow_user(chat_id)
             await client.send_message(
                 chat_id,
                 f"<b>Menerima Pesan!!!</b>\n{biji} <b>Terdeteksi Developer Naya-Premium</b>",
                 parse_mode=enums.ParseMode.HTML,
             )
-        except:
+        except BaseException:
             pass
         return
     elif user_warns <= limit - 2:

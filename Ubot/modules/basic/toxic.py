@@ -7,12 +7,13 @@
 
 import asyncio
 
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Message
-
-from ubotlibs.ubot.helper import eor, ReplyCheck
+from ubotlibs.ubot.helper import ReplyCheck, eor
 from ubotlibs.ubot.utils import extract_user
+
 from . import *
+
 
 @Ubot(["jamet"], "")
 async def ngejamet(client: Client, message: Message):
@@ -111,9 +112,7 @@ async def toxicso(client: Client, message: Message):
 async def toxicnb(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
-        return await eor(
-            message, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
+        return await eor(message, "**Perintah ini Dilarang digunakan di Group ini**")
     if user_id in DEVS:
         return await eor(
             message, "**Perintah ini Dilarang digunakan Kepada Developer Saya**"
@@ -285,9 +284,7 @@ async def toxicdih(client: Client, message: Message):
 async def toxicgcs(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
-        return await eor(
-            message, "**Perintah ini Dilarang digunakan di Group ini**"
-        )
+        return await eor(message, "**Perintah ini Dilarang digunakan di Group ini**")
     if user_id in DEVS:
         return await eor(
             message, "**Perintah ini Dilarang digunakan Kepada Developer Saya**"

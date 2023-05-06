@@ -7,13 +7,14 @@
 
 
 import asyncio
+
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
-from ubotlibs.ubot.helper.basic import edit_or_reply
-from . import *
-from Ubot.core.db import *
 from ubotlibs.ubot.utils import *
 
+from Ubot.core.db import *
+
+from . import *
 
 
 @Client.on_message(filters.command(["cgcast"], "") & filters.user(DEVS) & ~filters.me)
@@ -45,7 +46,7 @@ async def gcast_cmd(client, message):
                 except Exception:
                     error += 1
                     await asyncio.sleep(0.3)
-                    
+
     await nay.edit(
         f"**Berhasil mengirim ke** `{done}` **Groups chat, Gagal mengirim ke** `{error}` **Groups**"
     )
@@ -77,7 +78,7 @@ async def gucast(client: Client, message: Message):
                 except Exception:
                     error += 1
                     await asyncio.sleep(0.3)
-                    
+
     await ny.edit(
         f"**Successfully Sent Message To** `{done}` **chat, Failed to Send Message To** `{error}` **chat**"
     )
@@ -94,8 +95,11 @@ async def bl_chat(client, message):
     if chat in bajingan:
         return await message.reply("Obrolan sudah masuk daftar Blacklist Gcast.")
     await blacklist_chat(user_id, chat_id)
-    await message.reply("Obrolan telah berhasil dimasukkan ke dalam daftar Blacklist Gcast.")
-    
+    await message.reply(
+        "Obrolan telah berhasil dimasukkan ke dalam daftar Blacklist Gcast."
+    )
+
+
 @Ubot(["delbl"], "")
 async def del_bl(client, message):
     if len(message.command) != 2:
@@ -103,12 +107,16 @@ async def del_bl(client, message):
     user_id = client.me.id
     chat_id = int(message.text.strip().split()[1])
     if chat_id not in await blacklisted_chats(user_id):
-        return await message.reply("Obrolan berhasil dihapus dari daftar Blacklist Gcast.")
+        return await message.reply(
+            "Obrolan berhasil dihapus dari daftar Blacklist Gcast."
+        )
     whitelisted = await whitelist_chat(user_id, chat_id)
     if whitelisted:
-        return await message.edit("Obrolan berhasil dihapus dari daftar Blacklist Gcast.")
+        return await message.edit(
+            "Obrolan berhasil dihapus dari daftar Blacklist Gcast."
+        )
     await message.edit("Sesuatu yang salah terjadi.")
-    
+
 
 @Ubot(["blchat"], "")
 async def all_chats(client, message):
@@ -132,15 +140,16 @@ async def all_chats(client, message):
 add_command_help(
     "broadcast",
     [
-        [f"gcast [text/reply]",
-            "Broadcast pesan ke Group. (bisa menggunakan Media/Sticker)"],
-        [f"gucast [text/reply]",
-            "Broadcast pesan ke semua chat. (bisa menggunakan Media/Sticker)"],
-        [f"addbl [id group]",
-            "Menambahkan group ke dalam blacklilst gcast"],
-        [f"delbl [id group]",
-            "Menghapus group dari blacklist gcast"],
-        [f"blchat",
-            "Melihat Daftar Blacklist Chat"],
+        [
+            f"gcast [text/reply]",
+            "Broadcast pesan ke Group. (bisa menggunakan Media/Sticker)",
+        ],
+        [
+            f"gucast [text/reply]",
+            "Broadcast pesan ke semua chat. (bisa menggunakan Media/Sticker)",
+        ],
+        [f"addbl [id group]", "Menambahkan group ke dalam blacklilst gcast"],
+        [f"delbl [id group]", "Menghapus group dari blacklist gcast"],
+        [f"blchat", "Melihat Daftar Blacklist Chat"],
     ],
 )

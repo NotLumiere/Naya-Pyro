@@ -8,18 +8,15 @@
 # Credits Tomi Setiawan
 import asyncio
 import os
-import random
-from io import BytesIO
-import math
 import shlex
+from io import BytesIO
 from typing import Tuple
-from pyrogram import Client, filters
+
 from py_extract import Video_tools
-from pyrogram.enums import MessageMediaType, MessagesFilter
-from pyrogram.raw.functions.messages import DeleteHistory
-from pyrogram.types import InputMediaPhoto, Message
 from ubotlibs.ubot.helper import get_arg
+
 from . import *
+
 
 async def dl_pic(client, download):
     path = await client.download_media(download)
@@ -28,6 +25,7 @@ async def dl_pic(client, download):
     os.remove(path)
     get_photo = BytesIO(content)
     return get_photo
+
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
     args = shlex.split(cmd)
@@ -41,6 +39,7 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
         process.returncode,
         process.pid,
     )
+
 
 mod_name = os.path.basename(__file__)[:-3]
 
@@ -64,10 +63,15 @@ async def extract_all_aud(client, message):
         await babi.edit("`Downloading...`")
         ext_video = await client.download_media(message=replied_video)
         await babi.edit("`Extracting Audio(s)...`")
-        exted_aud = Video_tools.extract_all_audio(input_file=ext_video, output_path=ext_out_path)
+        exted_aud = Video_tools.extract_all_audio(
+            input_file=ext_video, output_path=ext_out_path
+        )
         await babi.edit("`Uploading...`")
         for nexa_aud in exted_aud:
-            await message.reply_audio(audio=nexa_aud, caption=f"`Extracted by` {(await client.get_me()).mention}")
+            await message.reply_audio(
+                audio=nexa_aud,
+                caption=f"`Extracted by` {(await client.get_me()).mention}",
+            )
         await babi.edit("`Extracting Finished!`")
         shutil.rmtree(ext_out_path)
     except Exception as e:
@@ -103,7 +107,8 @@ async def epek(client, message):
         await Tm.edit(
             f"Silahkan balas ke audio atau mp3, contoh : <code>!efek bengek</code> sambil balas ke audio atau mp3"
         )
-        
+
+
 add_command_help(
     "convert",
     [
@@ -112,9 +117,14 @@ add_command_help(
         [f"togif <reply to video>", "Convert video ke gif."],
         [f"toimg <reply stiker>", "Convert stiker ke foto."],
         [f"cartoon [reply to image]", "Ubah gambar menggunakan deepai api."],
-        [f"toonify [reply to image]", "Untuk mempercantik gambar menggunakan deepai api."],
+        [
+            f"toonify [reply to image]",
+            "Untuk mempercantik gambar menggunakan deepai api.",
+        ],
         [f"pcil [reply to image]", "Untuk membuat gambar hitam putih."],
-        [f"efek [reply to audio][bengek/robot/jedug/echo/fast]", "Untuk memberi efek pada audio."],
+        [
+            f"efek [reply to audio][bengek/robot/jedug/echo/fast]",
+            "Untuk memberi efek pada audio.",
+        ],
     ],
 )
-
