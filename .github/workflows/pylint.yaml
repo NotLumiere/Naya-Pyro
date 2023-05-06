@@ -1,1 +1,46 @@
 
+name: PyLint
+on:
+  push:
+    branches: [ naya ]
+    paths:
+    - "**.py"
+jobs:
+  PEP8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+          cache: "pip"
+      - name: Install Python lint libraries
+        run: pip install autopep8 autoflake isort black
+      - name: Check for showstoppers
+        run: |
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive Ubot/*.py
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive Ubot/modules/basic/*.py
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive Ubot/modules/bot/*.py
+      - name: Remove unused imports and variables
+        run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports Ubot/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports Ubot/modules/basic/*.py
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports Ubot/modules/bot/*.py
+      - name: lint with isort and black
+        run: |
+          isort Ubot/*.py
+          black --fast Ubot/*.py
+          isort Ubot/modules/basic/*.py
+          black --fast Ubot/modules/basic/*.py
+          isort Ubot/modules/bot/*.py
+          black --fast Ubot/modules/bot/*.py
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'pylint: auto fixes'
+          commit_options: '--no-verify'
+          repository: .
+          commit_user_name: naya1503
+          commit_user_email: emiliasayang2@gmail.com
+          commit_author: Naya <emiliasayang2@gmail.com>
+          
