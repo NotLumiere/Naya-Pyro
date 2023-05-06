@@ -1,27 +1,36 @@
 import asyncio
 import math
+import os
 import sys
-from os import remove
+from io import BytesIO
+from itertools import count
+from os import environ, execle, remove
+
+from config import *
+from Ubot.core.db import *
+
+from . import *
+
+HAPP = None
+import heroku3
+from pyrogram import *
 
 import heroku3
 import requests
 import urllib3
+from dotenv import load_dotenv
 from pyrogram import *
 from pyrogram.types import *
 from ubotlibs.ubot.utils.misc import *
 
 from config import *
 from Ubot import *
-from Ubot.core.db import *
 from Ubot.logging import LOGGER
 from Ubot.modules.basic import *
 
-from . import *
-
-HAPP = None
-
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 
 
 XCB = [
@@ -40,19 +49,19 @@ XCB = [
     "main",
 ]
 
-
 @Client.on_message(filters.command("restart", "") & filters.me)
 async def restart_bot(client, message):
     try:
-        await message.edit("Restarting bot...")
+        await message.reply("Restarting bot...")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
     except BaseException as err:
         LOGGER(__name__).info(f"{err}")
         return
 
-    await message.edit("✅ Bot has restarted.")
+    await message.reply("✅ Bot has restarted.")
     client.restart()
-
+    
+    
 
 @Ubot("usage", "")
 async def usage_dynos(client, message):
@@ -118,7 +127,6 @@ async def usage_dynos(client, message):
 Dyno tersisa:
   ╰ Tersisa: `{hours}`**h**  `{minutes}`**m**  [`{percentage}`**%**]"""
     return await dyno.edit(text)
-
 
 @Ubot("shutdown", "")
 async def shutdown_bot(client, message):
