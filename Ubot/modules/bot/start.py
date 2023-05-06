@@ -101,7 +101,6 @@ async def restart_bot(_, message: Message):
         execle(sys.executable, *args, environ)
 
 
-
 @Ubot("usage", "")
 async def usage_dynos(client, message):
     if await is_heroku():
